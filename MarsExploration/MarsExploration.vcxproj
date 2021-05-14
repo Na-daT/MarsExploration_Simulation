@@ -143,18 +143,25 @@
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\FormualtionEvent.cpp" />
     <ClCompile Include="Events\PromotionEvent.cpp" />
-    <ClCompile Include="MarsStation\MarsStation.cpp" />
-    <ClCompile Include="MarsStation\missions.cpp" />
-    <ClCompile Include="MarsStation\Rover.cpp" />
+    <ClCompile Include="Main_Demo.cpp" />
+    <ClCompile Include="Station_classes\MarsStation.cpp" />
+    <ClCompile Include="Station_classes\missions.cpp" />
+    <ClCompile Include="Station_classes\Rover.cpp" />
+    <ClCompile Include="UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataStructures\Node.h" />
+    <ClInclude Include="DataStructures\PriorityNode.h" />
+    <ClInclude Include="DataStructures\PriorityQueue.h" />
+    <ClInclude Include="DataStructures\Queue.h" />
     <ClInclude Include="Events\CancellationEvent.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\FormualtionEvent.h" />
     <ClInclude Include="Events\PromotionEvent.h" />
-    <ClInclude Include="MarsStation\MarsStation.h" />
-    <ClInclude Include="MarsStation\missions.h" />
-    <ClInclude Include="MarsStation\Rover.h" />
+    <ClInclude Include="Station_classes\MarsStation.h" />
+    <ClInclude Include="Station_classes\missions.h" />
+    <ClInclude Include="Station_classes\Rover.h" />
+    <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

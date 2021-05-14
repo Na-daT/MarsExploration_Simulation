@@ -27,13 +27,19 @@
     <ClCompile Include="Events\CancellationEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MarsStation\MarsStation.cpp">
+    <ClCompile Include="Main_Demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MarsStation\Rover.cpp">
+    <ClCompile Include="UI\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MarsStation\missions.cpp">
+    <ClCompile Include="Station_classes\MarsStation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Station_classes\missions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Station_classes\Rover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,13 +56,28 @@
     <ClInclude Include="Events\CancellationEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarsStation\MarsStation.h">
+    <ClInclude Include="UI\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarsStation\Rover.h">
+    <ClInclude Include="Station_classes\MarsStation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MarsStation\missions.h">
+    <ClInclude Include="Station_classes\missions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Station_classes\Rover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\PriorityQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\PriorityNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
