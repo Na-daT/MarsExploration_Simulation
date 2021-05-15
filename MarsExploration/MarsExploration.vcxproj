@@ -139,10 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Events\CancellationEvent.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\FormualtionEvent.cpp" />
-    <ClCompile Include="Events\PromotionEvent.cpp" />
     <ClCompile Include="Main_Demo.cpp" />
     <ClCompile Include="Station_classes\MarsStation.cpp" />
     <ClCompile Include="Station_classes\missions.cpp" />
@@ -154,10 +152,8 @@
     <ClInclude Include="DataStructures\PriorityNode.h" />
     <ClInclude Include="DataStructures\PriorityQueue.h" />
     <ClInclude Include="DataStructures\Queue.h" />
-    <ClInclude Include="Events\CancellationEvent.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\FormualtionEvent.h" />
-    <ClInclude Include="Events\PromotionEvent.h" />
     <ClInclude Include="Station_classes\MarsStation.h" />
     <ClInclude Include="Station_classes\missions.h" />
     <ClInclude Include="Station_classes\Rover.h" />

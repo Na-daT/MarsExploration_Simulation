@@ -18,13 +18,7 @@
     <ClCompile Include="Events\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Events\PromotionEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Events\FormualtionEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Events\CancellationEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main_Demo.cpp">
@@ -47,13 +41,7 @@
     <ClInclude Include="Events\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events\PromotionEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Events\FormualtionEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\CancellationEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\UI.h">
