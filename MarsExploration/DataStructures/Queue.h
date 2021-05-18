@@ -67,7 +67,7 @@ Queue<T>::Queue()
 {
 	backPtr = nullptr;
 	frontPtr = nullptr;
-	counter = 0;			//	Queue is empty so count of nodes should equal 0
+	counter = 0;			//	Queue initialised with 0 nodes
 
 }
 /////////////////////////////////////////////////////////////////////////////////////////
