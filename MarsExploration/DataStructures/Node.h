@@ -1,61 +1,61 @@
 #ifndef _NODE
 #define _NODE
 template < typename T>
-class Node
+class PriorityNode
 {
 private:
 	T item; // A data item
-	Node<T>* next; // Pointer to next node
+	PriorityNode<T>* next; // Pointer to next node
 public:
-	Node();
-	Node(const T& r_Item);
-	Node(const T& r_Item, Node<T>* nextNodePtr);
+	PriorityNode();
+	PriorityNode(const T& r_Item);
+	PriorityNode(const T& r_Item, PriorityNode<T>* nextNodePtr);
 	void setItem(const T& r_Item);
-	void setNext(Node<T>* nextNodePtr);
+	void setNext(PriorityNode<T>* nextNodePtr);
 	T getItem() const;
-	Node<T>* getNext() const;
+	PriorityNode<T>* getNext() const;
 }; // end Node
 #endif
 
 template < typename T>
-Node<T>::Node()
+PriorityNode<T>::PriorityNode()
 {
 	next = nullptr;
 }
 
 template < typename T>
-Node<T>::Node(const T& r_Item)
+PriorityNode<T>::PriorityNode(const T& r_Item)
 {
 	item = r_Item;
 	next = nullptr;
 }
 
 template < typename T>
-Node<T>::Node(const T& r_Item, Node<T>* nextNodePtr)
+PriorityNode<T>::PriorityNode(const T& r_Item, PriorityNode<T>* nextNodePtr)
 {
 	item = r_Item;
 	next = nextNodePtr;
 }
 template < typename T>
-void Node<T>::setItem(const T& r_Item)
+void PriorityNode<T>::setItem(const T& r_Item)
 {
 	item = r_Item;
 }
 
 template < typename T>
-void Node<T>::setNext(Node<T>* nextNodePtr)
+void PriorityNode<T>::setNext(PriorityNode<T>* nextNodePtr)
 {
 	next = nextNodePtr;
 }
 
 template < typename T>
-T Node<T>::getItem() const
+T PriorityNode<T>::getItem() const
 {
 	return item;
 }
 
 template < typename T>
-Node<T>* Node<T>::getNext() const
+PriorityNode<T>* PriorityNode<T>::getNext() const
 {
 	return next;
 }
