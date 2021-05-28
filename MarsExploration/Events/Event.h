@@ -1,8 +1,9 @@
 #pragma once
+#include "../Defs.h"
 class Event
 {
 	int ID;
-	char EventType;
+	Event_Type EventType;
 public:
 
 
