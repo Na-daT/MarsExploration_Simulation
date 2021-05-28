@@ -1,5 +1,5 @@
-#ifndef _NODE
-#define _NODE
+#ifndef P_NODE
+#define P_NODE
 template < typename T>
 class PriorityNode
 {
@@ -18,7 +18,7 @@ public:
 	T getItem() const;
 	PriorityNode<T>* getNext() const;
 }; // end Node
-#endif
+
 
 template < typename T>
 PriorityNode<T>::PriorityNode()
@@ -78,3 +78,4 @@ PriorityNode<T>* PriorityNode<T>::getNext() const
 {
 	return next;
 }
+#endif
