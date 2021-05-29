@@ -152,6 +152,7 @@
     <ClInclude Include="DataStructures\PriorityNode.h" />
     <ClInclude Include="DataStructures\PriorityQueue.h" />
     <ClInclude Include="DataStructures\Queue.h" />
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\FormualtionEvent.h" />
     <ClInclude Include="Station_classes\MarsStation.h" />

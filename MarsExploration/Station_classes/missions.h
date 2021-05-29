@@ -1,4 +1,5 @@
 #pragma once
+#include "../Defs.h"
 class missions
 {
 	int ID;
@@ -6,7 +7,8 @@ class missions
 	int Tarloc;
 	int MissDur;
 	int MissSign;
-	char MissionType;
+	Mission_Type MissionType;
+	Mission_Status Status;
 public:
 
 };
