@@ -19,3 +19,8 @@ MarsStation::MarsStation()
 	InCheckUpPolarQueue = new Queue<Rover*>;
 	InCheckUpEmergQueue = new Queue<Rover*>;
 }
+
+void MarsStation::addtoQueue(missions*)
+{
+
+}

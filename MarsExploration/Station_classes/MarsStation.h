@@ -27,6 +27,7 @@ private:
 	PriorityQueue<Rover*>* InExecRoverQueue;
 	Queue<Rover*>* InCheckUpPolarQueue;
 	Queue<Rover*>* InCheckUpEmergQueue;
+
 public:
 	void addtoQueue(missions*); //MArs station pointer to be able to execute the function addtoQueue to be added
 
