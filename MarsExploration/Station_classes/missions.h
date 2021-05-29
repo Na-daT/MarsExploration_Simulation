@@ -11,6 +11,7 @@ class missions
 	Mission_Status Status;
 public:
 	missions(int id, int FD, int targ_loc, int duration,int sig);
+	void setID(int id);
 
 };
 
