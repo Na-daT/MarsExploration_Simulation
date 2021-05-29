@@ -2,10 +2,13 @@
 #include "../Defs.h"
 class Event
 {
+protected:
 	int ID;
-	Event_Type EventType;
-public:
+	int Event_day;
 
+public:
+	Event(int id, int Etime);
+	virtual void Execute()=0;
 
 };
 

@@ -10,6 +10,7 @@ class missions
 	Mission_Type MissionType;
 	Mission_Status Status;
 public:
+	missions(int id, int FD, int targ_loc, int duration,int sig);
 
 };
 

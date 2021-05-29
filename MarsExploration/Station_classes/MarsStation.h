@@ -8,10 +8,16 @@
 class MarsStation
 {
 private:
+
+
+	int totalNumberofMissions;
+	int totalNumberofRovers;
 	int numofEmergMissions;
 	int numofPolarMissions;
 	int numofEmergRovers;
 	int numofPolarRovers;
+
+
 	Queue<Event*>* EventsQueue;
 	PriorityQueue<missions*>* WaitingEmergMissQueue;
 	Queue<missions*>* WaitingPolarMissQueue;
@@ -22,6 +28,7 @@ private:
 	Queue<Rover*>* InCheckUpPolarQueue;
 	Queue<Rover*>* InCheckUpEmergQueue;
 public:
+	void addtoQueue(missions*); //MArs station pointer to be able to execute the function addtoQueue to be added
 
 
 };
