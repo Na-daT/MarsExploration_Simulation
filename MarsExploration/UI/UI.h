@@ -10,7 +10,7 @@ class UI
 public: 
 	bool LoadStation();
 	bool LoadStation(ifstream& inputFile);
-
+	void LoadFormEvents(ifstream& inputFile);
 
 
 };

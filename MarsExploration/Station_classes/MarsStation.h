@@ -33,5 +33,6 @@ public:
 
 	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
 
+	void LoadEvents();//to enqueue event that will be read from the UI 
 };
 
