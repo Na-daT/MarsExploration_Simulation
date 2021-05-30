@@ -13,7 +13,7 @@ public:
 	bool LoadStation();
 	bool LoadStation(ifstream& inputFile);
 	void LoadFormEvents(ifstream& inputFile);
-
-
+	SystemMode GetModeofOperation();
+	void SaveFile();
 };
 

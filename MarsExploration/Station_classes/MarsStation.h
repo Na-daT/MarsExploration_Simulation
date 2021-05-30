@@ -10,14 +10,14 @@ class MarsStation
 {
 private:
 
-
+	int totNumEvents;
 	int totalNumberofMissions;
 	int totalNumberofRovers;
 	int numofEmergMissions;
 	int numofPolarMissions;
 	int numofEmergRovers;
 	int numofPolarRovers;
-
+	int CurrentDay;
 
 	Queue<Event*>* EventsQueue;
 	PriorityQueue<missions*>* WaitingEmergMissQueue;
@@ -30,10 +30,19 @@ private:
 	Queue<Rover*>* InCheckUpEmergQueue;
 
 public:
-	void addtoQueue(missions*); //MArs station pointer to be able to execute the function addtoQueue to be added
+	void addtoQueue(missions* missP); //MArs station pointer to be able to execute the function addtoQueue to be added
 
 	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
 
-	void LoadEvents(int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
+	void LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
+
+	int GetPriority(missions* missionP);
+
+	void IncrementTime();//function to increment day + increase waiting time of available missions
+	void Excute_events();
+	/*void InteractiveMode();
+	void SilentMode();
+	void StepbyStepMode();*/
+
 };
 

@@ -93,11 +93,18 @@ void UI::LoadFormEvents(ifstream& inputFile)
 		Mission_Type MT;
 		MT = (Missiontype == 'P' ? Polar : Emergency);
 
-		MarsP->LoadEvents(Event_ID, Ev_day,MT,TLOC,MDUR,SIG );
-			
-		
+		MarsP->LoadEvents(EventsNO,Event_ID, Ev_day,MT,TLOC,MDUR,SIG );
 
 	}
 
+}
+
+SystemMode UI::GetModeofOperation()
+{
+	int t;
+	cout << "please enter mode of operation, 1 for interactive, 2 for silent, 3 for step-by-step";
+
+	cin >> t;
+	return (SystemMode)t;
 }
 

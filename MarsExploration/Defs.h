@@ -23,4 +23,11 @@ enum Event_Type
 {
 	Formulation
 };
+
+enum SystemMode
+{
+	Interactive_mode = 1,
+	Silent_mode,
+	Step_by_Step
+};
 #endif // !1

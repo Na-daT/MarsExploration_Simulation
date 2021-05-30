@@ -10,6 +10,6 @@ protected:
 public:
 	Event(int id, int Etime);
 	virtual void Execute(MarsStation* MarsStationP)=0;
-
+	int getEvent_day();
 };
 

@@ -8,6 +8,7 @@ MarsStation::MarsStation()
 	numofPolarMissions = 0;
 	numofEmergRovers = 0;
 	numofPolarRovers = 0;
+	CurrentDay = 1;
 
 	EventsQueue = new Queue<Event*>;
 	WaitingEmergMissQueue = new PriorityQueue<missions*>;
@@ -20,11 +21,37 @@ MarsStation::MarsStation()
 	InCheckUpEmergQueue = new Queue<Rover*>;
 }
 
-void MarsStation::addtoQueue(missions*)
+void MarsStation::addtoQueue(missions* missP)
 {
-
+	if (missP->getType() == Polar)
+	{
+		WaitingPolarMissQueue->enqueue(missP);
+	}
+	else
+	{
+		int pr = GetPriority(missP);
+		WaitingEmergMissQueue->enqueue(missP, pr);
+	}
 }
-
+int MarsStation::GetPriority(missions* missionP)
+{
+	int prio = (missionP->getMissSign()) + 10000 * (missionP->getMissDur()) / (missionP->getFormD() * missionP->getTarloc());
+	return prio;
+}
+void MarsStation::Excute_events()
+{
+	Event* ev;
+	while (EventsQueue->peek(ev))
+	{
+		if (ev->getEvent_day() > CurrentDay)
+		{
+			return;
+		}
+			ev->Execute(this);
+			EventsQueue->dequeue(ev);
+			delete ev;
+	}
+}
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
 
@@ -33,6 +60,7 @@ void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int
 		Rover* R = new Rover(Emergency, EmergencyRoverSpeed, EmergencyCheckUpDuration, NumberofMissionsBefCheckUp);
 
 		AvailableEmergRovQueue->enqueue(R);
+		numofEmergRovers++;
 	}
 
 
@@ -41,14 +69,28 @@ void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int
 		Rover* R = new Rover(Polar, PolarRoverSpeed, PolarCheckupDuration, NumberofMissionsBefCheckUp);
 
 		AvailablePolarQueue->enqueue(R);
+		numofPolarRovers++;
 	}
-
+	totalNumberofRovers = numofEmergRovers + numofPolarRovers;
 }
 
-void MarsStation::LoadEvents(int id, int day, Mission_Type MT, int target, int duration, int significance)
+void MarsStation::LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance)
 {
 	Event* EventP = new FormualtionEvent(id, day, MT,target,duration, significance);
 	EventsQueue->enqueue(EventP);
+
+	if (MT == Polar)
+	{
+		numofPolarMissions++;
+		totalNumberofMissions++;
+	}
+	else
+	{
+		numofEmergMissions++;
+		totalNumberofMissions++;
+	}
+
+	totNumEvents = totnumber;
 }
 
 
