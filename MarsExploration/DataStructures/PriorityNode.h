@@ -17,6 +17,7 @@ public:
 	int getPriority() const;
 	T getItem() const;
 	PriorityNode<T>* getNext() const;
+
 }; // end Node
 
 

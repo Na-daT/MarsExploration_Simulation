@@ -24,3 +24,23 @@ void MarsStation::addtoQueue(missions*)
 {
 
 }
+
+void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
+{
+
+	for (int i = 0; i < EmergencyRoversCount; i++)
+	{
+		Rover* R = new Rover(Emergency, EmergencyRoverSpeed, EmergencyCheckUpDuration, NumberofMissionsBefCheckUp);
+
+		AvailableEmergRovQueue->enqueue(R);
+	}
+
+
+	for (int i = 0; i < PolarRoversCount; i++)
+	{
+		Rover* R = new Rover(Polar, PolarRoverSpeed, PolarCheckupDuration, NumberofMissionsBefCheckUp);
+
+		AvailablePolarQueue->enqueue(R);
+	}
+
+}

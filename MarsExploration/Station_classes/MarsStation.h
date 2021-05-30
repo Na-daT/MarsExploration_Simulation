@@ -31,6 +31,7 @@ private:
 public:
 	void addtoQueue(missions*); //MArs station pointer to be able to execute the function addtoQueue to be added
 
+	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
 
 };
 

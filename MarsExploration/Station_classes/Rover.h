@@ -8,7 +8,9 @@ class Rover
 	int numOfmissionsBefCheckUp;
 	int TotalNumOfMissions;
 public:
-
+	Rover(Mission_Type m, int speed, int cUpT, int numOfmissionsBefCheckUp);
+	void setType(Mission_Type m);
+	void setSpeed(int n);
 
 };
 

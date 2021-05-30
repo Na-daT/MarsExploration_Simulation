@@ -19,27 +19,31 @@ bool UI::LoadStation()
 
 bool UI::LoadStation(ifstream& inputFile)
 {
-
-
-	
 	int EmergencyRoversCount, PolarRoversCount;
 	int EmergencyRoverSpeed, PolarRoverSpeed; //{polar speed, Emergency speed}
 	int NumberofMissionsBefCheckUp;
 	int EmergencyCheckUpDuration, PolarCheckupDuration; //{polarDuration, Emergency Duration}
 
-	int* arr[] = 
+	// creating an array containing pointers to these variables in order to easily loop over them
+	// to store the data from the input file
+	int* arr[] =
 	{
-		&EmergencyRoversCount/*, &PolarRoversCount, &EmergencyRoverSpeed,&PolarRoverSpeed
-		&NumberofMissionsBefCheckUp,& EmergencyCheckUpDuration, & */
+		&EmergencyRoversCount, & PolarRoversCount, & EmergencyRoverSpeed,
+		& PolarRoverSpeed, & NumberofMissionsBefCheckUp, & EmergencyCheckUpDuration, & PolarCheckupDuration
+		
 	};
+
+
 	
 	for (int i = 0; i < 7;i++)
 	{
+		inputFile >> *arr[i];
 
 	}
 
 
 	//loadRovers function
-	//call loadEvent(rest of file)
+	//call loadEvent(rest of file) 
 
 }
+
