@@ -44,3 +44,11 @@ void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int
 	}
 
 }
+
+void MarsStation::LoadEvents(int id, int day, Mission_Type MT, int target, int duration, int significance)
+{
+	Event* EventP = new FormualtionEvent(id, day, MT,target,duration, significance);
+	EventsQueue->enqueue(EventP);
+}
+
+

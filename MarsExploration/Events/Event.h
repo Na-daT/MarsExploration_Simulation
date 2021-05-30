@@ -1,5 +1,6 @@
 #pragma once
 #include "../Defs.h"
+#include"../Station_classes/MarsStation.h"
 class Event
 {
 protected:
@@ -8,7 +9,7 @@ protected:
 
 public:
 	Event(int id, int Etime);
-	virtual void Execute()=0;
+	virtual void Execute(MarsStation* MarsStationP)=0;
 
 };
 

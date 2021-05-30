@@ -4,6 +4,7 @@
 #include"../Events/Event.h"
 #include"missions.h"
 #include"Rover.h"
+#include"../Events/FormualtionEvent.h"
 
 class MarsStation
 {
@@ -33,6 +34,6 @@ public:
 
 	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
 
-	void LoadEvents();//to enqueue event that will be read from the UI 
+	void LoadEvents(int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
 };
 

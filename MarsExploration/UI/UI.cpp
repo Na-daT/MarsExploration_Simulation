@@ -2,6 +2,11 @@
 
 
 
+UI::UI(MarsStation* MarsStP)
+{
+	MarsP = MarsStP;
+}
+
 bool UI::LoadStation()
 {
 	string s;
@@ -23,7 +28,7 @@ bool UI::LoadStation(ifstream& inputFile)
 	int EmergencyRoverSpeed, PolarRoverSpeed; //{polar speed, Emergency speed}
 	int NumberofMissionsBefCheckUp;
 	int EmergencyCheckUpDuration, PolarCheckupDuration; //{polarDuration, Emergency Duration}
-	MarsStation* MarsP;
+	
 
 
 	// creating an array containing pointers to these variables in order to easily loop over them
@@ -55,23 +60,42 @@ void UI::LoadFormEvents(ifstream& inputFile)
 {
 	int EventsNO;
 	inputFile >> EventsNO;
-	
+
+	char EventType;
+	char Missiontype;
+
+	int Ev_day;
+	int Event_ID;
+	int TLOC;
+	int MDUR;
+	int SIG;
+
 
 	for (int i = 0; i < EventsNO; i++)
 	{
-		char Event;
-		inputFile >> Event;
-		char Missiontype;
+		
 
-		inputFile >> Missiontype;
-
-		switch (Missiontype)
+		int* arr[] =
 		{
-		case('E'):
-			
-		case ('P'):
-			
+			&Event_ID,
+			& Ev_day,
+			& TLOC, & MDUR, & SIG
+
+		};
+		inputFile >> EventType;
+		inputFile >> Missiontype;
+		
+		for (int i = 0;i < 5;i++)
+		{
+			inputFile >> *arr[i];
 		}
+
+		Mission_Type MT;
+		MT = (Missiontype == 'P' ? Polar : Emergency);
+
+		MarsP->LoadEvents(Event_ID, Ev_day,MT,TLOC,MDUR,SIG );
+			
+		
 
 	}
 

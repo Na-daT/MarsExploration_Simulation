@@ -7,7 +7,9 @@ using namespace std;
 class UI
 {
 	ifstream InputFile;
+	MarsStation* MarsP;
 public: 
+	UI(MarsStation* MarsStP);
 	bool LoadStation();
 	bool LoadStation(ifstream& inputFile);
 	void LoadFormEvents(ifstream& inputFile);
