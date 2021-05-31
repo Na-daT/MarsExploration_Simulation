@@ -125,6 +125,7 @@ void MarsStation::UpdateCurrDay()
 	CurrentDay++;
 	CheckCompletedMissions();
 	//Check check up duration of rovers
+	//update waiting time of missions in queues
 
 }
 
@@ -138,7 +139,6 @@ void MarsStation::CheckCompletedMissions()
 			ARover->getmissionp()->setStatus(Completed);
 			CompletedMissQueue->enqueue(ARover->getmissionp());
 			ARover->SetMission(nullptr);
-			//UpdateRover
 			UpdateRoverStatus(ARover);
 		}
 
