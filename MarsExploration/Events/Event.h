@@ -1,6 +1,13 @@
 #pragma once
+#ifndef _Event_H
+#define _Event_H
+
+
 #include "../Defs.h"
-#include"../Station_classes/MarsStation.h"
+//#include"../Station_classes/MarsStation.h"
+
+class MarsStation;
+
 class Event
 {
 protected:
@@ -13,3 +20,4 @@ public:
 	int getEvent_day();
 };
 
+#endif

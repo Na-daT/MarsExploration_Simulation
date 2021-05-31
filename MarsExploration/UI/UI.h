@@ -1,13 +1,19 @@
 #pragma once
+#ifndef _UI_
+#define _UI_
+
 #include <iostream>
 using namespace std;
 #include <fstream>
 #include "../Station_classes/MarsStation.h"
+#include "../Defs.h"
+
+//class MarsStation;
 
 class UI
 {
 	ifstream InputFile;
-	MarsStation* MarsP;
+	MarsStation *MarsP;
 public: 
 	UI(MarsStation* MarsStP);
 	bool LoadStation();
@@ -17,3 +23,4 @@ public:
 	void SaveFile();
 };
 
+#endif 

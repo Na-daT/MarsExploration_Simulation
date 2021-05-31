@@ -52,11 +52,64 @@ void MarsStation::Excute_events()
 			delete ev;
 	}
 }
-void MarsStation::Demo()
+
+void MarsStation::AssignMissions()
 {
-	UI* uiP;
-	uiP->LoadStation();
+	missions* currentMiss;
+	if (WaitingEmergMissQueue->peekFront(currentMiss))
+	{
+		if (GetAvailableRover(currentMiss))
+		{
+			WaitingEmergMissQueue->dequeue(currentMiss);
+			currentMiss->setStatus(in_Execution);
+			currentMiss->setEndDate(CurrentDay);
+		}
+	}
+
+	if (WaitingPolarMissQueue->peek(currentMiss))
+	{
+		if (GetAvailableRover(currentMiss))
+		{
+			WaitingPolarMissQueue->dequeue(currentMiss);
+			currentMiss->setStatus(in_Execution);
+			currentMiss->setEndDate(CurrentDay);
+		}
+	}
 }
+
+bool MarsStation::GetAvailableRover(missions* missionP)
+{
+	Mission_Type Mtype = missionP->getType();
+	Rover* ARover;
+
+
+	switch ((int)Mtype)
+	{
+	case(1):
+		if (AvailableEmergRovQueue->dequeue(ARover))
+		{
+			InExecRoverQueue->enqueue(ARover,(CurrentDay + missionP->getMissDur()));
+			ARover->SetMission(missionP);
+			return true;
+		}
+		else if (AvailablePolarQueue->dequeue(ARover))
+		{
+			InExecRoverQueue->enqueue(ARover, (CurrentDay + missionP->getMissDur()));
+			ARover->SetMission(missionP);
+			ARover->incrementTotMission();
+			return true;
+		}
+	case(2):
+		if (AvailablePolarQueue->dequeue(ARover))
+		{
+			InExecRoverQueue->enqueue(ARover, (CurrentDay + missionP->getMissDur()));
+			ARover->SetMission(missionP);
+			ARover->incrementTotMission();
+		}
+	}
+	return false;
+}
+
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
 

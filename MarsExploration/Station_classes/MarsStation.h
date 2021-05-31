@@ -1,11 +1,15 @@
 #pragma once
+#ifndef _MarsStation_H
+#define _MarsStation_H
+
 #include "../DataStructures/Queue.h"
 #include"../DataStructures/PriorityQueue.h"
 #include"../Events/Event.h"
 #include"missions.h"
 #include"Rover.h"
 #include"../Events/FormualtionEvent.h"
-#include "../UI/UI.h"
+//#include "../UI/UI.h"
+
 
 class MarsStation
 {
@@ -20,7 +24,7 @@ private:
 	int numofPolarRovers;
 	int CurrentDay;
 
-	Queue<Event*>* EventsQueue;
+	Queue<Event *> *EventsQueue;
 	PriorityQueue<missions*>* WaitingEmergMissQueue;
 	Queue<missions*>* WaitingPolarMissQueue;
 	Queue<missions*>* CompletedMissQueue;
@@ -41,13 +45,16 @@ public:
 
 	int GetPriority(missions* missionP);
 
-	void IncrementTime();//function to increment day + increase waiting time of available missions
+	//void IncrementTime();//function to increment day + increase waiting time of available missions
 	void Excute_events();
 
-	void Demo();
+	void AssignMissions();
+	bool GetAvailableRover(missions* missionP);
+
 	/*void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();*/
 
 };
 
+#endif

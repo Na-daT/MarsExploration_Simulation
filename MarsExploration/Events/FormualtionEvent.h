@@ -1,7 +1,13 @@
 #pragma once
-#include "Event.h"
+#ifndef _Formulation_event_
+#define _Formulation_event_
+
+#include <iostream>
+using namespace std;
+
 #include "../Station_classes/missions.h"
 #include "../Station_classes/MarsStation.h"
+#include "Event.h"
 
 class FormualtionEvent :
     public Event
@@ -18,3 +24,4 @@ public:
     
 };
 
+#endif

@@ -8,7 +8,7 @@ FormualtionEvent::FormualtionEvent(int id, int FD, Mission_Type type, int targ, 
 
 void FormualtionEvent::Execute(MarsStation* MarsStationP)
 {
-	missions* NeMission = new missions(ID, Event_day,location,Duration,sig);
+	missions* NeMission = new missions(ID, Event_day,location,Duration,sig,Type);
 
 	if (Type == Polar)
 	{

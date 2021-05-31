@@ -1,4 +1,7 @@
 #pragma once
+#ifndef _Missions_
+#define _Missions_
+
 #include "../Defs.h"
 class missions
 {
@@ -8,16 +11,20 @@ class missions
 	int MissDur;
 	int MissSign;
 	int waiting_time;
+	int ExecutionEndDay;
 	Mission_Type MissionType;
 	Mission_Status Status;
 public:
-	missions(int id, int FD, int targ_loc, int duration,int sig);
+	missions(int id, int FD, int targ_loc, int duration,int sig, Mission_Type MT);
 	void setID(int id);
 	Mission_Type getType();
 	int getMissSign();
 	int getTarloc();
 	int getMissDur();
 	int getFormD();
+	void setStatus(Mission_Status St);
+	void setEndDate(int d);
+
 
 };
-
+#endif

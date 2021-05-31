@@ -1,14 +1,16 @@
 #include "missions.h"
 
-missions::missions(int id, int FD, int targ_loc, int duration, int sig):
+missions::missions(int id, int FD, int targ_loc, int duration, int sig, Mission_Type MT):
 	ID(id), FormDay(FD), Tarloc(targ_loc), MissDur(duration), MissSign(sig)
 {
-
+	MissionType = MT;
+	waiting_time = 0;
+	Status = Waiting;
 }
 
 Mission_Type missions::getType()
 {
-	return Mission_Type();
+	return MissionType;
 }
 
 int missions::getMissSign()
@@ -29,4 +31,14 @@ int missions::getMissDur()
 int missions::getFormD()
 {
 	return FormDay;
+}
+
+void missions::setStatus(Mission_Status St)
+{
+	Status = St;
+}
+
+void missions::setEndDate(int d)
+{
+	ExecutionEndDay = d + MissDur;
 }

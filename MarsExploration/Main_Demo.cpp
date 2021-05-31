@@ -1,8 +1,10 @@
 #include "Station_classes/MarsStation.h"
 #include "UI/UI.h"
 
-int main() 
+int main()
 {
-	MarsStation MS;
-	MS.Demo();
+	MarsStation* MS = new MarsStation();
+	UI* uiP = new UI(MS);
+	uiP->LoadStation();
+	MS->Excute_events();
 }

@@ -1,7 +1,6 @@
 #include "UI.h"
 
 
-
 UI::UI(MarsStation* MarsStP)
 {
 	MarsP = MarsStP;
@@ -11,6 +10,8 @@ bool UI::LoadStation()
 {
 	string s;
 	cin >> s;
+
+	s = "input files\\" + s;
 
 	InputFile.open(s, ios::in);
 
@@ -53,7 +54,7 @@ bool UI::LoadStation(ifstream& inputFile)
 	LoadFormEvents(inputFile);
 	//loadRovers function
 	//call loadEvent(rest of file) 
-
+	return true;
 }
 
 void UI::LoadFormEvents(ifstream& inputFile)
