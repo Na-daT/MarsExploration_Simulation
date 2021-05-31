@@ -160,6 +160,9 @@
     <ClInclude Include="Station_classes\Rover.h" />
     <ClInclude Include="UI\UI.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input files\Text.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

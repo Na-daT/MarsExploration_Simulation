@@ -52,6 +52,11 @@ void MarsStation::Excute_events()
 			delete ev;
 	}
 }
+void MarsStation::Demo()
+{
+	UI* uiP;
+	uiP->LoadStation();
+}
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
 

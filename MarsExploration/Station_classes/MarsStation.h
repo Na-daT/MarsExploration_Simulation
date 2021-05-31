@@ -5,6 +5,7 @@
 #include"missions.h"
 #include"Rover.h"
 #include"../Events/FormualtionEvent.h"
+#include "../UI/UI.h"
 
 class MarsStation
 {
@@ -30,7 +31,9 @@ private:
 	Queue<Rover*>* InCheckUpEmergQueue;
 
 public:
-	void addtoQueue(missions* missP); //MArs station pointer to be able to execute the function addtoQueue to be added
+	MarsStation();
+
+	void addtoQueue(missions* missP); //Mars station pointer to be able to execute the function addtoQueue to be added
 
 	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
 
@@ -40,6 +43,8 @@ public:
 
 	void IncrementTime();//function to increment day + increase waiting time of available missions
 	void Excute_events();
+
+	void Demo();
 	/*void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();*/

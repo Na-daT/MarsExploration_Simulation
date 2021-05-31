@@ -1,6 +1,8 @@
 #pragma once
 #include "Event.h"
 #include "../Station_classes/missions.h"
+#include "../Station_classes/MarsStation.h"
+
 class FormualtionEvent :
     public Event
 {
