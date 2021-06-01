@@ -25,7 +25,7 @@ public:
 	Mission_Type getRoverType();
 	int getCheckUpDuaratoin();
 	int GetCheckUpStartDate();
-	void setCheckUpStartDate();
+	void setCheckUpStartDate(int ST);
 };
 
 #endif
