@@ -19,6 +19,10 @@ public:
 	void setSpeed(int n);
 	void SetMission(missions* Mis);
 	void incrementTotMission();
+	missions* getmissionp();
+	bool CompareMissNoOfRov();
+	Mission_Type getRoverType();
+
 
 };
 

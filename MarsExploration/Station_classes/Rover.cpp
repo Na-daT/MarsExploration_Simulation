@@ -31,3 +31,21 @@ void Rover::incrementTotMission()
 {
 	TotalNumOfMissions++;
 }
+
+missions* Rover::getmissionp()
+{
+	return Mission_in_execution;
+}
+
+bool Rover::CompareMissNoOfRov()
+{
+	if (TotalNumOfMissions == numOfmissionsBefCheckUp)
+		return true;
+	else
+		return false;
+}
+
+Mission_Type Rover::getRoverType()
+{
+	return RoverType;
+}

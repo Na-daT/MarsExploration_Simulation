@@ -50,7 +50,9 @@ public:
 
 	void AssignMissions();
 	bool GetAvailableRover(missions* missionP);
-
+	void UpdateCurrDay();
+	void CheckCompletedMissions();
+	void UpdateRoverStatus(Rover* rp);
 	/*void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();*/

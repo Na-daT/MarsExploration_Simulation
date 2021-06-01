@@ -53,10 +53,12 @@ void MarsStation::Excute_events()
 	}
 }
 
+
+
 void MarsStation::AssignMissions()
 {
 	missions* currentMiss;
-	if (WaitingEmergMissQueue->peekFront(currentMiss))
+	while (WaitingEmergMissQueue->peekFront(currentMiss))
 	{
 		if (GetAvailableRover(currentMiss))
 		{
@@ -64,9 +66,11 @@ void MarsStation::AssignMissions()
 			currentMiss->setStatus(in_Execution);
 			currentMiss->setEndDate(CurrentDay);
 		}
+		else
+			break;
 	}
 
-	if (WaitingPolarMissQueue->peek(currentMiss))
+	while (WaitingPolarMissQueue->peek(currentMiss))
 	{
 		if (GetAvailableRover(currentMiss))
 		{
@@ -74,6 +78,8 @@ void MarsStation::AssignMissions()
 			currentMiss->setStatus(in_Execution);
 			currentMiss->setEndDate(CurrentDay);
 		}
+		else
+			break;
 	}
 }
 
@@ -88,13 +94,14 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 	case(1):
 		if (AvailableEmergRovQueue->dequeue(ARover))
 		{
-			InExecRoverQueue->enqueue(ARover,(CurrentDay + missionP->getMissDur()));
+			InExecRoverQueue->enqueue(ARover,1000*(1/(CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
+			ARover->incrementTotMission();
 			return true;
 		}
 		else if (AvailablePolarQueue->dequeue(ARover))
 		{
-			InExecRoverQueue->enqueue(ARover, (CurrentDay + missionP->getMissDur()));
+			InExecRoverQueue->enqueue(ARover, 1000 * (1 / (CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
 			ARover->incrementTotMission();
 			return true;
@@ -102,13 +109,69 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 	case(2):
 		if (AvailablePolarQueue->dequeue(ARover))
 		{
-			InExecRoverQueue->enqueue(ARover, (CurrentDay + missionP->getMissDur()));
+			InExecRoverQueue->enqueue(ARover, 1000 * (1 / (CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
 			ARover->incrementTotMission();
+			return true;
+		
 		}
 	}
 	return false;
 }
+
+void MarsStation::UpdateCurrDay()
+{
+
+	CurrentDay++;
+	CheckCompletedMissions();
+	//Check check up duration of rovers
+
+}
+
+void MarsStation::CheckCompletedMissions()
+{
+	Rover* ARover;
+	while (InExecRoverQueue->peekFront(ARover))
+	{
+		if (ARover->getmissionp()->getMissEndDay()==CurrentDay)
+		{
+			ARover->getmissionp()->setStatus(Completed);
+			CompletedMissQueue->enqueue(ARover->getmissionp());
+			ARover->SetMission(nullptr);
+			//UpdateRover
+			UpdateRoverStatus(ARover);
+		}
+
+
+	}
+
+
+
+
+}
+
+void MarsStation::UpdateRoverStatus(Rover* rp)
+{
+	if (rp->CompareMissNoOfRov())
+	{
+		InExecRoverQueue->dequeue(rp);
+		if (rp->getRoverType() == Emergency)
+			InCheckUpEmergQueue->enqueue(rp);
+		else
+			InCheckUpPolarQueue->enqueue(rp);
+	}
+	else
+	{
+		if (rp->getRoverType() == Emergency)
+			AvailableEmergRovQueue->enqueue(rp);
+		else
+			AvailablePolarQueue->enqueue(rp);
+
+	}
+}
+
+
+
 
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {

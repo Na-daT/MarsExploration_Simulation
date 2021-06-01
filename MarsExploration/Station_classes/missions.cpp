@@ -42,3 +42,8 @@ void missions::setEndDate(int d)
 {
 	ExecutionEndDay = d + MissDur;
 }
+
+int missions::getMissEndDay()
+{
+	return ExecutionEndDay;
+}

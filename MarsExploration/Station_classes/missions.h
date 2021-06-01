@@ -24,6 +24,7 @@ public:
 	int getFormD();
 	void setStatus(Mission_Status St);
 	void setEndDate(int d);
+	int getMissEndDay();
 
 
 };
