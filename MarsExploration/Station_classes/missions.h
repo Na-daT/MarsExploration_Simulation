@@ -9,6 +9,7 @@ class missions
 	int FormDay;
 	int Tarloc;
 	int MissDur;
+	int timeForRoverFromAndToTLOC;
 	int MissSign;
 	int waiting_time;
 	int ExecutionEndDay;
@@ -17,7 +18,8 @@ class missions
 	int priority;
 public:
 	missions(int id, int FD, int targ_loc, int duration,int sig, Mission_Type MT);
-	void setID(int id);
+	//void setID(int id);
+	int getID();
 	Mission_Type getType();
 	int getMissSign();
 	int getTarloc();
@@ -30,6 +32,8 @@ public:
 	int getWaitingtime();
 	void setWaitingtime(int t);
 	int getPriority();
+	void setTimeFromToTLOC(int n);
+	int getTimeFromToTLOC();
 
 
 

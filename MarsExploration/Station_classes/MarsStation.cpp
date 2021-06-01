@@ -98,6 +98,7 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 			InExecRoverQueue->enqueue(ARover,1000*(1/(CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
 			ARover->incrementTotMission();
+			missionP->setTimeFromToTLOC((missionP->getTarloc() / ARover->getRoverSpeed()) / 25);
 			return true;
 		}
 		else if (AvailablePolarQueue->dequeue(ARover))
@@ -105,6 +106,7 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 			InExecRoverQueue->enqueue(ARover, 1000 * (1 / (CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
 			ARover->incrementTotMission();
+			missionP->setTimeFromToTLOC((missionP->getTarloc() / ARover->getRoverSpeed()) / 25);
 			return true;
 		}
 	case(2):
@@ -113,6 +115,7 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 			InExecRoverQueue->enqueue(ARover, 1000 * (1 / (CurrentDay + missionP->getMissDur())));
 			ARover->SetMission(missionP);
 			ARover->incrementTotMission();
+			missionP->setTimeFromToTLOC((missionP->getTarloc() / ARover->getRoverSpeed()) / 25);
 			return true;
 		
 		}
@@ -216,12 +219,74 @@ void MarsStation::updateWaitingTime()
 	}
 }
 
-void MarsStation::StartSim()
+/*void MarsStation::StartSim()
 {
 	CurrentDay = 0;
 	UpdateCurrDay();
 	Excute_events();
 	AssignMissions();
+}*/
+
+void MarsStation::SaveOutputFile(ofstream& outputF)
+{
+	missions* M;
+	outputF << "CD   " << "ID   " << "FD   " << "WD   " << "ED   " << endl;
+	for (int i = 0; i < totalNumberofMissions; i++)
+	{
+		CompletedMissQueue->dequeue(M);
+		outputF << calculateCD(M) << "   " << M->getID() << "   " << M->getFormD() << "   " << M->getWaitingtime() << "   " << M->getMissDur() + M->getTimeFromToTLOC() << endl;
+		CompletedMissQueue->enqueue(M);
+	}
+	
+	outputF << "......................................................" << endl;
+	outputF << "......................................................" << endl;
+	outputF << "Missions: " << totalNumberofMissions << " " << "[P: " << numofPolarMissions << " ,E: " << numofEmergMissions << "]" << endl;
+	outputF << "Rovers: " << totalNumberofRovers << " " << "[P: " << numofPolarRovers << " ,E: " << numofEmergRovers << "]" << endl;
+	outputF << "Avg Wait = " << CalculateAvgWaiting() << ", " << "Avg Exec = " << AvgExecTime() << endl;
+}
+
+int MarsStation::CalculateAvgWaiting()
+{
+	missions* M;
+	int sum = 0;
+	for (int i = 0; i < totalNumberofMissions; i++)
+	{
+		CompletedMissQueue->dequeue(M);
+		sum += M->getWaitingtime();
+		CompletedMissQueue->enqueue(M);
+	}
+
+	int Avg = sum / totalNumberofMissions;
+	return Avg;
+}
+
+int MarsStation::calculateCD(missions* M)
+{
+	int CD = M->getFormD() + M->getWaitingtime() + M->getMissDur() + M->getTimeFromToTLOC();
+}
+
+int MarsStation::AvgExecTime()
+{
+	missions* M;
+	int sum = 0;
+	for (int i = 0; i < totalNumberofMissions; i++)
+	{
+		CompletedMissQueue->dequeue(M);
+		sum += M->getMissDur();
+		sum += M->getTimeFromToTLOC();
+		CompletedMissQueue->enqueue(M);
+	}
+
+	int Avg = sum / totalNumberofMissions;
+	return Avg;
+}
+
+void MarsStation::StartSim(SystemMode t)
+{
+	switch (t)
+	{
+		
+	}
 }
 
 

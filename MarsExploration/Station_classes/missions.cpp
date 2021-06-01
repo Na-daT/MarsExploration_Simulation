@@ -8,6 +8,11 @@ missions::missions(int id, int FD, int targ_loc, int duration, int sig, Mission_
 	Status = Waiting;
 }
 
+int missions::getID()
+{
+	return ID;
+}
+
 Mission_Type missions::getType()
 {
 	return MissionType;
@@ -61,6 +66,16 @@ int missions::getWaitingtime()
 void missions::setWaitingtime(int t)
 {
 	waiting_time = t;
+}
+
+void missions::setTimeFromToTLOC(int n)
+{
+	timeForRoverFromAndToTLOC = n;
+}
+
+int missions::getTimeFromToTLOC()
+{
+	return timeForRoverFromAndToTLOC;
 }
 
 int missions::getPriority()

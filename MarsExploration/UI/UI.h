@@ -20,11 +20,11 @@ public:
 	bool LoadStation();
 	bool LoadStation(ifstream& inputFile);
 	void LoadFormEvents(ifstream& inputFile);
-	SystemMode GetModeofOperation();
+	void GetModeofOperation();
 	void SaveFile();
-	void InteractiveMode();
+/*	void InteractiveMode();
 	void SilentMode();
-	void StepbyStepMode();
+	void StepbyStepMode();*/
 };
 
 #endif 

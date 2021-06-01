@@ -26,6 +26,8 @@ public:
 	int getCheckUpDuaratoin();
 	int GetCheckUpStartDate();
 	void setCheckUpStartDate(int ST);
+	int getRoverSpeed();
+
 };
 
 #endif

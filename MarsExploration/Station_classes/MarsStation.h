@@ -2,6 +2,7 @@
 #ifndef _MarsStation_H
 #define _MarsStation_H
 
+#include <fstream>
 #include "../DataStructures/Queue.h"
 #include"../DataStructures/PriorityQueue.h"
 #include"../Events/Event.h"
@@ -55,7 +56,15 @@ public:
 	void UpdateRoverStatus(Rover* rp);
 	void CheckUpduartionEnd();
 	void updateWaitingTime();
-	void StartSim();
+	//void StartSim();
+	void SaveOutputFile(ofstream& outputF);
+	int CalculateAvgWaiting();
+	int calculateCD(missions* M);
+	int AvgExecTime();
+	void StartSim(SystemMode t);
+	void InteractiveMode();
+	void SilentMode();
+	void StepbyStepMode();
 	
 
 };

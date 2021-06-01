@@ -100,28 +100,34 @@ void UI::LoadFormEvents(ifstream& inputFile)
 
 }
 
-SystemMode UI::GetModeofOperation()
+void UI::GetModeofOperation()
 {
 	int t;
 	cout << "please enter mode of operation, 1 for interactive, 2 for silent, 3 for step-by-step";
 
 	cin >> t;
-	return (SystemMode)t;
+	MarsP->StartSim((SystemMode)t);
+	
 }
 
-void UI::SaveFile()
+void  UI::SaveFile()
 {
 	string s;
 	cout << "Please Enter File Name: ";
 	cin >> s;
-	s ="Output iles\\" + s;
+	s ="output files\\" + s;
+
+	OutputFile.open(s, ios::out);
+
+	
+	MarsP->SaveOutputFile(OutputFile);
 
 }
 
-void UI::InteractiveMode()
+/*void UI::InteractiveMode()
 {
 	
 
 
 }
-
+*/

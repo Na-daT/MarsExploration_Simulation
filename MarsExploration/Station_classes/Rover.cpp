@@ -64,3 +64,8 @@ void Rover::setCheckUpStartDate(int ST)
 {
 	checkUpStartDate = ST;
 }
+
+int Rover::getRoverSpeed()
+{
+	return RovSpeed;
+}
