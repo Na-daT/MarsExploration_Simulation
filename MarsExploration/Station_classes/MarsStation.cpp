@@ -1,4 +1,5 @@
 #include "MarsStation.h"
+#include "../UI/UI.h"
 
 MarsStation::MarsStation()
 {
@@ -150,10 +151,6 @@ void MarsStation::CheckCompletedMissions()
 
 
 	}
-
-
-
-
 }
 
 void MarsStation::UpdateRoverStatus(Rover* rp)
@@ -263,6 +260,7 @@ int MarsStation::CalculateAvgWaiting()
 int MarsStation::calculateCD(missions* M)
 {
 	int CD = M->getFormD() + M->getWaitingtime() + M->getMissDur() + M->getTimeFromToTLOC();
+	return CD;
 }
 
 int MarsStation::AvgExecTime()
@@ -281,12 +279,46 @@ int MarsStation::AvgExecTime()
 	return Avg;
 }
 
-void MarsStation::StartSim(SystemMode t)
+void MarsStation::StartSim(int t)
 {
 	switch (t)
 	{
-		
+	case(1):
+		InteractiveMode();
+	case(2):
+		SilentMode();
+	case(3):
+		StepbyStepMode();
 	}
+}
+
+void MarsStation::InteractiveMode()
+{
+	if (!PUI->LoadStation())
+	{
+		return;
+	}
+
+	CurrentDay = 0;
+
+	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty()))
+	{
+		UpdateCurrDay();
+		Excute_events();
+		AssignMissions();
+		//PUI->PrintOutput(); probably will be separate functions, check document
+
+	}
+	PUI->SaveFile();
+}
+
+void MarsStation::SilentMode()
+{
+}
+
+void MarsStation::StepbyStepMode()
+{
 }
 
 

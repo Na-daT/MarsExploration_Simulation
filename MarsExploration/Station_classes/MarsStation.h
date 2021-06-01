@@ -11,6 +11,7 @@
 #include"../Events/FormualtionEvent.h"
 //#include "../UI/UI.h"
 
+class UI;
 
 class MarsStation
 {
@@ -24,6 +25,8 @@ private:
 	int numofEmergRovers;
 	int numofPolarRovers;
 	int CurrentDay;
+
+	UI* PUI;
 
 	Queue<Event *> *EventsQueue;
 	PriorityQueue<missions*>* WaitingEmergMissQueue;
@@ -61,7 +64,7 @@ public:
 	int CalculateAvgWaiting();
 	int calculateCD(missions* M);
 	int AvgExecTime();
-	void StartSim(SystemMode t);
+	void StartSim(int t);
 	void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();

@@ -22,9 +22,8 @@ public:
 	void LoadFormEvents(ifstream& inputFile);
 	void GetModeofOperation();
 	void SaveFile();
-/*	void InteractiveMode();
-	void SilentMode();
-	void StepbyStepMode();*/
+
+	//void PrintOutput(int currDay, );
 };
 
 #endif 

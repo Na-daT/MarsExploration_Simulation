@@ -45,7 +45,7 @@ void missions::setStatus(Mission_Status St)
 
 void missions::setEndDate(int d)
 {
-	ExecutionEndDay = d + MissDur;
+	ExecutionEndDay = d + MissDur + timeForRoverFromAndToTLOC;
 }
 
 int missions::getMissEndDay()

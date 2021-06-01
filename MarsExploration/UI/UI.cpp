@@ -106,7 +106,7 @@ void UI::GetModeofOperation()
 	cout << "please enter mode of operation, 1 for interactive, 2 for silent, 3 for step-by-step";
 
 	cin >> t;
-	MarsP->StartSim((SystemMode)t);
+	MarsP->StartSim(t);
 	
 }
 
