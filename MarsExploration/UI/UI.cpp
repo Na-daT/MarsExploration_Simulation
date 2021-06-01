@@ -109,3 +109,19 @@ SystemMode UI::GetModeofOperation()
 	return (SystemMode)t;
 }
 
+void UI::SaveFile()
+{
+	string s;
+	cout << "Please Enter File Name: ";
+	cin >> s;
+	s ="Output iles\\" + s;
+
+}
+
+void UI::InteractiveMode()
+{
+	
+
+
+}
+

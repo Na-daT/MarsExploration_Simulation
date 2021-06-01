@@ -13,6 +13,7 @@ using namespace std;
 class UI
 {
 	ifstream InputFile;
+	ofstream OutputFile;
 	MarsStation *MarsP;
 public: 
 	UI(MarsStation* MarsStP);
@@ -21,6 +22,9 @@ public:
 	void LoadFormEvents(ifstream& inputFile);
 	SystemMode GetModeofOperation();
 	void SaveFile();
+	void InteractiveMode();
+	void SilentMode();
+	void StepbyStepMode();
 };
 
 #endif 

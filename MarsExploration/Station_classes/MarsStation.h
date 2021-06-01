@@ -55,10 +55,8 @@ public:
 	void UpdateRoverStatus(Rover* rp);
 	void CheckUpduartionEnd();
 	void updateWaitingTime();
-
-	/*void InteractiveMode();
-	void SilentMode();
-	void StepbyStepMode();*/
+	void StartSim();
+	
 
 };
 

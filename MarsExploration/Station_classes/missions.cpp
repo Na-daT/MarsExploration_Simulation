@@ -62,3 +62,8 @@ void missions::setWaitingtime(int t)
 {
 	waiting_time = t;
 }
+
+int missions::getPriority()
+{
+	return priority;
+}

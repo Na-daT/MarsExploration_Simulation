@@ -29,6 +29,7 @@ public:
 	void setPriority(int p);
 	int getWaitingtime();
 	void setWaitingtime(int t);
+	int getPriority();
 
 
 

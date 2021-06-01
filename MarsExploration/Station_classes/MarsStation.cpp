@@ -197,12 +197,31 @@ void MarsStation::CheckUpduartionEnd()
 void MarsStation::updateWaitingTime()
 {
 	missions* tempMi;
-	//Queue <missions*> tempPolar;
-	while (WaitingPolarMissQueue->dequeue(tempMi))
+	//eue <missions*>* tempPolar=new Queue<missions*>;
+	Queue<missions*>* tempEmerg = new Queue<missions*>;
+	for (int i = 0; i < numofPolarMissions;i++)
+	{
+		WaitingPolarMissQueue->dequeue(tempMi);
+		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
+		WaitingPolarMissQueue->enqueue(tempMi);
+	}
+	while (WaitingEmergMissQueue->dequeue(tempMi))
 	{
 		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
+		tempEmerg->enqueue(tempMi);
 	}
+	while (tempEmerg->dequeue(tempMi))
+	{
+		WaitingEmergMissQueue->enqueue(tempMi, tempMi->getPriority());
+	}
+}
 
+void MarsStation::StartSim()
+{
+	CurrentDay = 0;
+	UpdateCurrDay();
+	Excute_events();
+	AssignMissions();
 }
 
 
