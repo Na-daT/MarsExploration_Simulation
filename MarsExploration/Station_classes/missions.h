@@ -14,6 +14,7 @@ class missions
 	int ExecutionEndDay;
 	Mission_Type MissionType;
 	Mission_Status Status;
+	int priority;
 public:
 	missions(int id, int FD, int targ_loc, int duration,int sig, Mission_Type MT);
 	void setID(int id);
@@ -25,6 +26,10 @@ public:
 	void setStatus(Mission_Status St);
 	void setEndDate(int d);
 	int getMissEndDay();
+	void setPriority(int p);
+	int getWaitingtime();
+	void setWaitingtime(int t);
+
 
 
 };

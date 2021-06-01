@@ -47,3 +47,18 @@ int missions::getMissEndDay()
 {
 	return ExecutionEndDay;
 }
+
+void missions::setPriority(int p)
+{
+	priority = p;
+}
+
+int missions::getWaitingtime()
+{
+	return waiting_time;
+}
+
+void missions::setWaitingtime(int t)
+{
+	waiting_time = t;
+}

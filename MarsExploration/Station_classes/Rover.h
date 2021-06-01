@@ -13,6 +13,7 @@ class Rover
 	int numOfmissionsBefCheckUp;
 	int TotalNumOfMissions;
 	missions* Mission_in_execution;
+	int checkUpStartDate;
 public:
 	Rover(Mission_Type m, int speed, int cUpT, int numOfmissionsBefCheckUp);
 	void setType(Mission_Type m);
@@ -22,8 +23,9 @@ public:
 	missions* getmissionp();
 	bool CompareMissNoOfRov();
 	Mission_Type getRoverType();
-
-
+	int getCheckUpDuaratoin();
+	int GetCheckUpStartDate();
+	void setCheckUpStartDate();
 };
 
 #endif

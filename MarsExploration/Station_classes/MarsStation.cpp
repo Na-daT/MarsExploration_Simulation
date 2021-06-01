@@ -30,6 +30,7 @@ void MarsStation::addtoQueue(missions* missP)
 	else
 	{
 		int pr = GetPriority(missP);
+		missP->setPriority(pr);
 		WaitingEmergMissQueue->enqueue(missP, pr);
 	}
 }
@@ -125,7 +126,9 @@ void MarsStation::UpdateCurrDay()
 	CurrentDay++;
 	CheckCompletedMissions();
 	//Check check up duration of rovers
+	CheckUpduartionEnd();
 	//update waiting time of missions in queues
+	updateWaitingTime();
 
 }
 
@@ -156,9 +159,15 @@ void MarsStation::UpdateRoverStatus(Rover* rp)
 	{
 		InExecRoverQueue->dequeue(rp);
 		if (rp->getRoverType() == Emergency)
+		{
 			InCheckUpEmergQueue->enqueue(rp);
+			rp->setCheckUpStartDate(CurrentDay);
+		}
 		else
+		{
 			InCheckUpPolarQueue->enqueue(rp);
+			rp->setCheckUpStartDate(CurrentDay);
+		}
 	}
 	else
 	{
@@ -168,6 +177,32 @@ void MarsStation::UpdateRoverStatus(Rover* rp)
 			AvailablePolarQueue->enqueue(rp);
 
 	}
+}
+
+void MarsStation::CheckUpduartionEnd()
+{
+	Rover* Rv;
+	while (InCheckUpPolarQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
+	{
+			InCheckUpPolarQueue->dequeue(Rv);
+			AvailablePolarQueue->enqueue(Rv);
+	}
+	while (InCheckUpEmergQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
+	{
+		InCheckUpEmergQueue->dequeue(Rv);
+		AvailableEmergRovQueue->enqueue(Rv);
+	}
+}
+
+void MarsStation::updateWaitingTime()
+{
+	missions* tempMi;
+	//Queue <missions*> tempPolar;
+	while (WaitingPolarMissQueue->dequeue(tempMi))
+	{
+		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
+	}
+
 }
 
 

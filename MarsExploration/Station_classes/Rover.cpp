@@ -49,3 +49,18 @@ Mission_Type Rover::getRoverType()
 {
 	return RoverType;
 }
+
+int Rover::getCheckUpDuaratoin()
+{
+	return RoverCheckupTime;
+}
+
+int Rover::GetCheckUpStartDate()
+{
+	return checkUpStartDate;
+}
+
+void Rover::setCheckUpStartDate(int ST)
+{
+	checkUpStartDate = ST;
+}

@@ -53,6 +53,9 @@ public:
 	void UpdateCurrDay();
 	void CheckCompletedMissions();
 	void UpdateRoverStatus(Rover* rp);
+	void CheckUpduartionEnd();
+	void updateWaitingTime();
+
 	/*void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();*/
