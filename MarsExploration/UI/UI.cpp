@@ -8,8 +8,10 @@ UI::UI(MarsStation* MarsStP)
 
 bool UI::LoadStation()
 {
+	cout << "Enter file name to load: ";
 	string s;
 	cin >> s;
+	cout << endl;
 
 	s = "input files\\" + s;
 
@@ -119,7 +121,6 @@ void  UI::SaveFile()
 
 	OutputFile.open(s, ios::out);
 
-	
 	MarsP->SaveOutputFile(OutputFile);
 
 }

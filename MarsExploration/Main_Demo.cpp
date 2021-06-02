@@ -5,5 +5,5 @@ int main()
 {
 	MarsStation* MS = new MarsStation();
 	UI* uiP = new UI(MS);
-	MS->InteractiveMode();
+	uiP->GetModeofOperation();
 }

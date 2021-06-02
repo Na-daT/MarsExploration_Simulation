@@ -1,5 +1,7 @@
 #include "MarsStation.h"
 #include "../UI/UI.h"
+#include <windows.h>
+#include <stdlib.h>
 
 MarsStation::MarsStation(/*UI* UIp*/)
 {
@@ -298,10 +300,13 @@ void MarsStation::StartSim(int t)
 	{
 	case(1):
 		InteractiveMode();
+		break;
 	case(2):
 		SilentMode();
+		break;
 	case(3):
 		StepbyStepMode();
+		break;
 	}
 }
 
@@ -334,10 +339,50 @@ void MarsStation::InteractiveMode()
 
 void MarsStation::SilentMode()
 {
+	if (!PUI->LoadStation())
+	{
+		return;
+	}
+
+	//PUI print " Silent Mode Simulation Start"
+
+	CurrentDay = 0;
+
+	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty()))
+	{
+		UpdateCurrDay();
+		Excute_events();
+		AssignMissions();
+	}
+	PUI->SaveFile();
+	//PUI print "Simulation ends, Output file created"
 }
 
 void MarsStation::StepbyStepMode()
 {
+	if (!PUI->LoadStation())
+	{
+		return;
+	}
+
+	CurrentDay = 0;
+
+	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty()))
+	{
+		UpdateCurrDay();
+		Excute_events();
+		AssignMissions();
+		PUI->prin_CurrentDay(CurrentDay);
+		printMissionsLine();
+		printInExecMiss_Rovers();
+		//ba2y el print function
+
+
+		Sleep(1000);
+	}
+	PUI->SaveFile();
 }
 
 void MarsStation::printMissionsLine()
