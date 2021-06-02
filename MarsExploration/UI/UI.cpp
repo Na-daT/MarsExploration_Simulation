@@ -124,6 +124,60 @@ void  UI::SaveFile()
 
 }
 
+void UI::prin_CurrentDay(int d)
+{
+	cout << "Current Day:" <<d << endl;
+}
+
+void UI::print_waitingMissions(int totwaiting, int* waitEmID, int totWaitEm, int totWaitPolar, int* waitPolarID)
+{
+	cout << totwaiting << " " << "Waiting Missions: " << "[";
+
+	if (totwaiting == 0)
+	{
+		cout << "] ()" << endl;
+		cout << "-------------------------------------------------------" << endl;
+		return;
+	}
+	for (int i = 0; i < totWaitEm; i++)
+	{
+		cout << waitEmID[i] <<",";
+	}
+	cout << "] (";
+	for (int i = 0; i < totWaitPolar; i++)
+	{
+		cout << waitPolarID[i] << ",";
+	}
+	cout << ")" << endl;
+	cout << "-------------------------------------------------------" << endl;
+
+}
+
+void UI::Print_inExecMis_Rovers(int totinEx, int NumofEmergency, int NumofPolar, int* EmergencyMissionIDs, int* EmergencyRoversIDs, int* PolarMissionsIDs, int* PolarRoversIDs)
+{
+	cout << totinEx << " In-Execution Missions/Rovers: " << " [";
+	for (int i = 0; i < NumofEmergency; i++)
+	{
+		cout << EmergencyMissionIDs[i] << "/" << EmergencyRoversIDs[i] << ", ";
+	}
+	cout << "] ";
+
+	cout << "(";
+	for (int i = 0; i < NumofPolar;i++)
+	{
+		cout << PolarMissionsIDs[i] << "/" << PolarRoversIDs[i] << " ,";
+	}
+	cout << ") " << endl;
+
+	cout << "-------------------------------------------------------" << endl;
+}
+
+void UI::WaitForUserClick()
+{
+	cout << "press Enter to review next day...";
+	cin.get();
+}
+
 /*void UI::InteractiveMode()
 {
 	

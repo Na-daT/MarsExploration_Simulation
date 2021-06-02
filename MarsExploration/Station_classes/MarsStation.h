@@ -39,7 +39,7 @@ private:
 	Queue<Rover*>* InCheckUpEmergQueue;
 
 public:
-	MarsStation();
+	MarsStation(/*UI* UIp*/);
 
 	void addtoQueue(missions* missP); //Mars station pointer to be able to execute the function addtoQueue to be added
 
@@ -61,14 +61,15 @@ public:
 	void updateWaitingTime();
 	//void StartSim();
 	void SaveOutputFile(ofstream& outputF);
-	int CalculateAvgWaiting();
+	float CalculateAvgWaiting();
 	int calculateCD(missions* M);
-	int AvgExecTime();
+	float AvgExecTime();
 	void StartSim(int t);
 	void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();
-	
+	void printMissionsLine();
+	void printInExecMiss_Rovers();
 
 };
 

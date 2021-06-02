@@ -34,6 +34,7 @@ public:
 	int getPriority();
 	void setTimeFromToTLOC(int n);
 	int getTimeFromToTLOC();
+	int getFullTimeEx();
 
 
 

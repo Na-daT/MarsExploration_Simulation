@@ -6,8 +6,8 @@
 
 enum Mission_Type
 {
+	Emergency=1,
 	Polar,
-	Emergency,
 	Mission_Type_CNT
 };
 

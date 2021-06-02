@@ -14,8 +14,10 @@ class Rover
 	int TotalNumOfMissions;
 	missions* Mission_in_execution;
 	int checkUpStartDate;
+	int current_missionEx_pr;
+	int ID;
 public:
-	Rover(Mission_Type m, int speed, int cUpT, int numOfmissionsBefCheckUp);
+	Rover(Mission_Type m, int speed, int cUpT, int numOfmissionsBefCheckUp, int id);
 	void setType(Mission_Type m);
 	void setSpeed(int n);
 	void SetMission(missions* Mis);
@@ -27,6 +29,9 @@ public:
 	int GetCheckUpStartDate();
 	void setCheckUpStartDate(int ST);
 	int getRoverSpeed();
+	void setCurrentMissPr(int P);
+	int getCurrentMissPr();
+	int getID();
 
 };
 

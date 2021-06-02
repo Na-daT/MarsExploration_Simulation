@@ -78,6 +78,12 @@ int missions::getTimeFromToTLOC()
 	return timeForRoverFromAndToTLOC;
 }
 
+int missions::getFullTimeEx()
+{
+	int n = MissDur + timeForRoverFromAndToTLOC;
+	return n;
+}
+
 int missions::getPriority()
 {
 	return priority;

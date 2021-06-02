@@ -1,12 +1,13 @@
 #include "Rover.h"
 
-Rover::Rover(Mission_Type m, int speed, int cUpT, int numOfmissions)
+Rover::Rover(Mission_Type m, int speed, int cUpT, int numOfmissions, int id)
 {
 	RoverType = m;
 	setSpeed(speed);
 	RoverCheckupTime = cUpT;
 	numOfmissionsBefCheckUp = numOfmissions;
 	TotalNumOfMissions = 0;
+	ID = id;
 }
 
 void Rover::setType(Mission_Type m)
@@ -68,4 +69,20 @@ void Rover::setCheckUpStartDate(int ST)
 int Rover::getRoverSpeed()
 {
 	return RovSpeed;
+}
+
+void Rover::setCurrentMissPr(int P)
+{
+	current_missionEx_pr = P;
+
+}
+
+int Rover::getCurrentMissPr()
+{
+	return current_missionEx_pr;
+}
+
+int Rover::getID()
+{
+	return ID;
 }
