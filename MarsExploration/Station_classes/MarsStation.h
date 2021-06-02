@@ -63,15 +63,19 @@ public:
 	void updateWaitingTime();
 	//void StartSim();
 	void SaveOutputFile(ofstream& outputF);
+	/////////////////////////////
 	float CalculateAvgWaiting();
 	int calculateCD(missions* M);
 	float AvgExecTime();
+	/////////////////////////////
 	void StartSim(int t);
 	void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();
+	///////////////////////////////
 	void printMissionsLine();
 	void printInExecMiss_Rovers();
+	void Print_Rover_Line();
 
 };
 

@@ -26,6 +26,8 @@ public:
 	void print_waitingMissions(int totwaiting, int* waitEmID, int totWaitEm, int totWaitPolar, int* waitPolarID);
 	void Print_inExecMis_Rovers(int totinEx, int NumofEmergency, int NumofPolar,int* EmergencyMissionIDs, int* EmergencyRoversIDs, int* PolarMissionsIDs, int* PolarRoversIDs);
 	void WaitForUserClick();
+	void SilentModePrintout();
+	void Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* AvailablePolerIDs, int AvailableEmrgency, int AvailablePolar);
 	//void PrintOutput(int currDay, );
 };
 

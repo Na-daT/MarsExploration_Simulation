@@ -179,6 +179,35 @@ void UI::WaitForUserClick()
 	cin.get();
 }
 
+void UI::SilentModePrintout()
+{
+	cout << "Silent Mode" << endl << " Simulation Starts..." << endl << " Simulation ends, Output file created" << endl;
+}
+
+void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* AvailablePolerIDs, int AvailableEmrgency, int AvailablePolar)
+{
+	cout << totRov << "Available Rovers: [";
+
+	if (AvailableEmrgency != 0)
+	{
+		for (int i = 0; i < AvailableEmrgency;i++)
+		{
+			cout << AvailableEmergencyIDs[i] << ",";
+		}
+	}
+	cout << "] (";
+
+	if (AvailablePolar!= 0)
+	{
+		for (int i = 0; i < AvailablePolar;i++)
+		{
+			cout << AvailablePolerIDs[i] << ",";
+		}
+	}
+	cout << ")" << endl;
+	cout<< "-------------------------------------------------------" << endl;
+}
+
 /*void UI::InteractiveMode()
 {
 	

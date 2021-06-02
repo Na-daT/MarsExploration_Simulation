@@ -331,7 +331,6 @@ void MarsStation::InteractiveMode()
 		//ba2y el print function
 
 		PUI->WaitForUserClick();
-		//PUI->PrintOutput(); probably will be separate functions, check document
 
 	}
 	PUI->SaveFile();
@@ -344,8 +343,7 @@ void MarsStation::SilentMode()
 		return;
 	}
 
-	//PUI print " Silent Mode Simulation Start"
-
+	PUI->SilentModePrintout();
 	CurrentDay = 0;
 
 	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
@@ -399,7 +397,7 @@ void MarsStation::printMissionsLine()
 			WaitingPolarMissQueue->enqueue(MI);
 			waiting++;
 		}
-	}
+	}//fe 7aga shklha 8lt leh ba loop over the total number of polar missions when idk asln ad eh waiting
 
 	Queue <missions*>* tempEm = new Queue <missions*>;
 
@@ -455,6 +453,21 @@ void MarsStation::printInExecMiss_Rovers()
 	}
 
 	PUI->Print_inExecMis_Rovers(EmCounter + PCounter, EmCounter, PCounter, EmMissionsIds, EmRoverIds, PolarMissionsIds, PolarRovIds);
+}
+
+void MarsStation::Print_Rover_Line()
+{
+	Rover* Rv;
+	int totEm;
+	int totPolar;
+	int* EmergencyIDs = new int[numofEmergRovers];
+	int* PolarIDs = new int[numofPolarRovers];
+
+	/*while (AvailableEmergRovQueue->dequeue(Rv))
+	{
+
+	}
+	PUI->Print_Rover_Line();*/
 }
 
 
