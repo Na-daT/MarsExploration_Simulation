@@ -161,6 +161,7 @@
     <ClInclude Include="UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="input files\EventsMoreThanRovers.txt" />
     <Text Include="input files\Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

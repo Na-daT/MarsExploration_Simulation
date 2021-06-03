@@ -1,5 +1,5 @@
 #include "UI.h"
-
+#include <conio.h>
 
 UI::UI(MarsStation* MarsStP)
 {
@@ -80,8 +80,8 @@ void UI::LoadFormEvents(ifstream& inputFile)
 
 		int* arr[] =
 		{
-			&Event_ID,
-			& Ev_day,
+			&Ev_day,
+			& Event_ID,
 			& TLOC, & MDUR, & SIG
 
 		};
@@ -105,7 +105,7 @@ void UI::LoadFormEvents(ifstream& inputFile)
 void UI::GetModeofOperation()
 {
 	int t;
-	cout << "please enter mode of operation, 1 for interactive, 2 for silent, 3 for step-by-step";
+	cout << "please enter mode of operation, 1 for interactive, 2 for silent, 3 for step-by-step" << endl;
 
 	cin >> t;
 	MarsP->StartSim(t);
@@ -122,7 +122,7 @@ void  UI::SaveFile()
 	OutputFile.open(s, ios::out);
 
 	MarsP->SaveOutputFile(OutputFile);
-
+	cout << "Simulation ends, Output file created" << endl;
 }
 
 void UI::prin_CurrentDay(int d)
@@ -175,13 +175,14 @@ void UI::Print_inExecMis_Rovers(int totinEx, int NumofEmergency, int NumofPolar,
 
 void UI::WaitForUserClick()
 {
-	cout << "press Enter to review next day...";
-	cin.get();
+	cout << "press any key to review next day..." << endl;
+	cout << endl;
+	_getch();
 }
 
 void UI::SilentModePrintout()
 {
-	cout << "Silent Mode" << endl << " Simulation Starts..." << endl << " Simulation ends, Output file created" << endl;
+	cout << "Silent Mode" << endl << " Simulation Starts..." << endl;
 }
 
 void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* AvailablePolerIDs, int AvailableEmrgency, int AvailablePolar)
@@ -206,6 +207,54 @@ void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* Available
 	}
 	cout << ")" << endl;
 	cout<< "-------------------------------------------------------" << endl;
+}
+
+void UI::Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP,int PolarInCheckUp, int*EmIDs,int*PolarIDs)
+{
+	cout << totInCheckUp << " In-Checkup Rovers: [" ;
+	if (EmergencyinCheckUP != 0)
+	{
+		for (int i = 0;i < EmergencyinCheckUP;i++)
+		{
+			cout << EmIDs[i] << ",";
+		}
+	}
+	cout << "] (";
+
+	if (PolarInCheckUp != 0)
+	{
+		for(int i = 0; i< PolarInCheckUp;i ++)
+		{
+			cout << PolarIDs[i] << ",";
+		}
+	}
+	cout << ")" << endl;
+	cout << "-------------------------------------------------------" << endl;
+}
+
+void UI::CompletedMissions(int totMissions, int EmMissions, int PolarMissions, int* Emergency_IDs, int* Polar_IDs)
+{
+	cout << totMissions << " Completed Missions: [";
+	if (EmMissions != 0)
+	{
+		for (int i = 0; i < EmMissions;i++)
+		{
+			cout << Emergency_IDs[i] << ",";
+		}
+	}
+	cout << "] (";
+
+	if (PolarMissions != 0)
+	{
+		for (int i = 0;i < PolarMissions;i++)
+		{
+			cout << Polar_IDs[i] << ",";
+		}
+	}
+	cout << ")" << endl;
+	cout << "-------------------------------------------------------" << endl;
+	cout << endl;
+
 }
 
 /*void UI::InteractiveMode()

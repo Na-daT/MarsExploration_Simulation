@@ -8,6 +8,7 @@ using namespace std;
 #include "../Station_classes/MarsStation.h"
 #include "../Defs.h"
 
+
 //class MarsStation;
 
 class UI
@@ -28,6 +29,8 @@ public:
 	void WaitForUserClick();
 	void SilentModePrintout();
 	void Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* AvailablePolerIDs, int AvailableEmrgency, int AvailablePolar);
+	void Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP, int PolarInCheckUp, int* EmIDs, int* PolarIDs);
+	void CompletedMissions(int totMissions, int EmMissions, int PolarMissions, int* Emergency_IDs, int* Polar_IDs);
 	//void PrintOutput(int currDay, );
 };
 

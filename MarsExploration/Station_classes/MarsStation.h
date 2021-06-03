@@ -76,6 +76,9 @@ public:
 	void printMissionsLine();
 	void printInExecMiss_Rovers();
 	void Print_Rover_Line();
+	void Print_InCheckUp_Rovers();
+	void Print_CompletedMissions();
+
 
 };
 
