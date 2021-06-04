@@ -26,6 +26,22 @@ MarsStation::MarsStation(/*UI* UIp*/)
 	InCheckUpEmergQueue = new Queue<Rover*>;
 }
 
+MarsStation::~MarsStation()
+{
+	if (PUI)
+		delete PUI;
+
+	delete EventsQueue;
+	delete WaitingEmergMissQueue;
+	delete WaitingPolarMissQueue;
+	delete CompletedMissQueue;
+	delete AvailableEmergRovQueue;
+	delete AvailablePolarQueue;
+	delete InExecRoverQueue;
+	delete InCheckUpPolarQueue;
+	delete InCheckUpEmergQueue;
+}
+
 void MarsStation::addtoQueue(missions* missP)
 {
 	if (missP->getType() == Polar)
@@ -568,6 +584,8 @@ void MarsStation::Print_CompletedMissions()
 
 
 }
+
+
 
 
 

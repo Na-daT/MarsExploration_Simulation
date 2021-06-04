@@ -21,9 +21,9 @@ public:
 	void setType(Mission_Type m);
 	void setSpeed(int n);
 	void SetMission(missions* Mis);
-	void incrementTotMission();
+	void incrementTotMission(); //instead of setting etc
 	missions* getmissionp();
-	bool CompareMissNoOfRov();
+	bool CompareMissNoOfRov(); //logic could have been in mars station
 	Mission_Type getRoverType();
 	int getCheckUpDuaratoin();
 	int GetCheckUpStartDate();

@@ -11,9 +11,7 @@
 #include"../Events/FormualtionEvent.h"
 
 
-//#include "../UI/UI.h"
-
-class UI;
+class UI; //forward declaration
 
 class MarsStation
 {
@@ -22,10 +20,13 @@ private:
 	int totNumEvents;
 	int totalNumberofMissions;
 	int totalNumberofRovers;
+
 	int numofEmergMissions;
 	int numofPolarMissions;
+
 	int numofEmergRovers;
 	int numofPolarRovers;
+
 	int CurrentDay;
 
 	UI* PUI;
@@ -43,43 +44,56 @@ private:
 public:
 	MarsStation(/*UI* UIp*/);
 
-	void addtoQueue(missions* missP); //Mars station pointer to be able to execute the function addtoQueue to be added
 
+	void addtoQueue(missions* missP); //Add mission created by Event to its aprptiate queue
+
+	//loading functions
 	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
-
 	void LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
 
-	int GetPriority(missions* missionP);
+	int GetPriority(missions* missionP);//to calculate priority of emergency mission before enqueueing in priorty queue
+	void Excute_events();//excute events according to their day
+	void AssignMissions();//check if there are any waiting missions on this day and assign to rover if availble 
+	bool GetAvailableRover(missions* missionP);//check if there is an availble rover according to mission type 
 
-	//void IncrementTime();//function to increment day + increase waiting time of available missions
-	void Excute_events();
+	//////////////////////////////
 
-	void AssignMissions();
-	bool GetAvailableRover(missions* missionP);
-	void UpdateCurrDay();
-	void CheckCompletedMissions();
-	void UpdateRoverStatus(Rover* rp);
-	void CheckUpduartionEnd();
-	void updateWaitingTime();
-	//void StartSim();
-	void SaveOutputFile(ofstream& outputF);
+	void UpdateCurrDay(); //increments current day and calls other incrementing functions below
+	void CheckCompletedMissions(); //checks if any of the missions in execution are done and move them to completed missions queue
+	void UpdateRoverStatus(Rover* rp); //called in CheckCompletedMissions to move rover that just finished a mission to either availbe or check up rovers queue
+	void CheckUpduartionEnd(); //check if the rovers in check up finished their check up duration and move them to availble rovers queue
+	void updateWaitingTime(); //icrement waiting time of missions that did not get assigned on this day
+
 	/////////////////////////////
+
+	void SaveOutputFile(ofstream& outputF);  //Saving output file (UI calls this function and send the File so it can write into it
+	
+	//output file calculations
 	float CalculateAvgWaiting();
 	int calculateCD(missions* M);
 	float AvgExecTime();
+
 	/////////////////////////////
-	void StartSim(int t);
-	void InteractiveMode();
+
+	void StartSim(int t);  //starts simulation in appropriate mode, called in UI
+
+	//Simulation modes
+	void InteractiveMode(); 
 	void SilentMode();
 	void StepbyStepMode();
+
 	///////////////////////////////
+
+	//Functions to Print in Console, Calls UI to COUT appropriate data
 	void printMissionsLine();
 	void printInExecMiss_Rovers();
 	void Print_Rover_Line();
 	void Print_InCheckUp_Rovers();
 	void Print_CompletedMissions();
 
+	/////////////////////////////
 
+	~MarsStation(); //destructor
 };
 
 #endif

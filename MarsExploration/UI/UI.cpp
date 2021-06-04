@@ -257,6 +257,12 @@ void UI::CompletedMissions(int totMissions, int EmMissions, int PolarMissions, i
 
 }
 
+UI::~UI()
+{
+	if (MarsP)
+		delete MarsP;
+}
+
 /*void UI::InteractiveMode()
 {
 	
