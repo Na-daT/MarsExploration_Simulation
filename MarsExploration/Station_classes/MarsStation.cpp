@@ -457,7 +457,7 @@ void MarsStation::printInExecMiss_Rovers()
 	
 	while (InExecRoverQueue->dequeue(tempRv))
 	{
-		if (tempRv->getRoverType() == Emergency)
+		if (tempRv->getmissionp()->getType() == Emergency)
 		{
 			EmRoverIds[EmCounter] = tempRv->getID();
 			EmMissionsIds[EmCounter] = tempRv->getmissionp()->getID();
@@ -594,6 +594,7 @@ void MarsStation::Print_CompletedMissions()
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
 	//creates all rovers and enqueues them according to data from input file
+	
 
 	int Id = 0;
 	for (int i = 0; i < EmergencyRoversCount; i++)

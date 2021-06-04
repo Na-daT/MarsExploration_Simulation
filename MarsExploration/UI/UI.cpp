@@ -24,7 +24,11 @@ bool UI::LoadStation()
 		LoadStation(InputFile);
 		return true;
 	}
-	else return false;
+	else
+	{
+		cout << "error in input file" << endl;
+		return false;
+	}
 }
 
 bool UI::LoadStation(ifstream& inputFile)
@@ -43,13 +47,17 @@ bool UI::LoadStation(ifstream& inputFile)
 		& PolarRoverSpeed, & NumberofMissionsBefCheckUp, & EmergencyCheckUpDuration, & PolarCheckupDuration
 		
 	};
-
-
 	
 	for (int i = 0; i < 7;i++)
 	{
 		inputFile >> *arr[i];
 
+	}
+
+	if (PolarRoversCount == 0 && EmergencyRoversCount == 0)
+	{
+		cout << "no rovers input" << endl;
+		return false;
 	}
 
 	//sends data to mars station to enqueue the rovers and set data members

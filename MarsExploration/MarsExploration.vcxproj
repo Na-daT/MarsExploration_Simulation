@@ -162,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input files\EventsMoreThanRovers.txt" />
+    <Text Include="input files\MaryamTestCase.txt" />
+    <Text Include="input files\testCase2.txt" />
     <Text Include="input files\Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

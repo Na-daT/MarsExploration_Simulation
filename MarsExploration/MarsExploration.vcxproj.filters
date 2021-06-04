@@ -75,5 +75,7 @@
   <ItemGroup>
     <Text Include="input files\Text.txt" />
     <Text Include="input files\EventsMoreThanRovers.txt" />
+    <Text Include="input files\testCase2.txt" />
+    <Text Include="input files\MaryamTestCase.txt" />
   </ItemGroup>
 </Project>
