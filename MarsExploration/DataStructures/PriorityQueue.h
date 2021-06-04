@@ -135,32 +135,5 @@ public:
 	{
 		return count;
 	}
-
-	T* toArray(int& counter)
-	{
-		counter = 0;
-
-		if (!front)
-			return nullptr;
-
-		//counting the no. of items in the Queue
-
-		PriorityNode<T>* p = front;
-		while (p)
-		{
-			counter++;
-			p = p->getNext();
-		}
-
-
-		T* Arr = new T[counter];
-		p = front;
-		for (int i = 0; i < counter; i++)
-		{
-			Arr[i] = p->getItem();
-			p = p->getNext();
-		}
-		return Arr;
-	}
 }; // end queue
 #endif
