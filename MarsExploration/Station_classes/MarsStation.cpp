@@ -592,6 +592,8 @@ void MarsStation::Print_CompletedMissions()
 
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
+	//creates all rovers and enqueues them according to data from input file
+
 	int Id = 0;
 	for (int i = 0; i < EmergencyRoversCount; i++)
 	{
@@ -616,6 +618,7 @@ void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int
 
 void MarsStation::LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance)
 {
+	//creates event and enqueue it 
 	Event* EventP = new FormualtionEvent(id, day, MT,target,duration, significance);
 	EventsQueue->enqueue(EventP);
 

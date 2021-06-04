@@ -8,6 +8,7 @@ UI::UI(MarsStation* MarsStP)
 
 bool UI::LoadStation()
 {
+	///takes input file name from user and opens it
 	cout << "Enter file name to load: ";
 	string s;
 	cin >> s;
@@ -17,6 +18,7 @@ bool UI::LoadStation()
 
 	InputFile.open(s, ios::in);
 
+	//if open loads the file
 	if (InputFile.is_open())
 	{
 		LoadStation(InputFile);
@@ -34,8 +36,7 @@ bool UI::LoadStation(ifstream& inputFile)
 	
 
 
-	// creating an array containing pointers to these variables in order to easily loop over them
-	// to store the data from the input file
+	//array containing all the values to be stored instead of reading one by one
 	int* arr[] =
 	{
 		&EmergencyRoversCount, & PolarRoversCount, & EmergencyRoverSpeed,
@@ -51,11 +52,12 @@ bool UI::LoadStation(ifstream& inputFile)
 
 	}
 
+	//sends data to mars station to enqueue the rovers and set data members
 	MarsP->loadRovers(EmergencyRoversCount, PolarRoversCount, EmergencyRoverSpeed, PolarRoverSpeed, NumberofMissionsBefCheckUp, EmergencyCheckUpDuration, PolarCheckupDuration);
 
-	LoadFormEvents(inputFile);
-	//loadRovers function
-	//call loadEvent(rest of file) 
+	//send the rest of the file to load Events data
+	LoadFormEvents(inputFile); 
+
 	return true;
 }
 
@@ -112,6 +114,8 @@ void UI::GetModeofOperation()
 	
 }
 
+
+////////////// printing functions //////////////
 void  UI::SaveFile()
 {
 	string s;
