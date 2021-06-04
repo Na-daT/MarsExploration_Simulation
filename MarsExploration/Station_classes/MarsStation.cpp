@@ -161,6 +161,7 @@ void MarsStation::UpdateCurrDay()
 	CheckUpduartionEnd();
 	//update waiting time of missions in queues
 	updateWaitingTime();
+	//check lw fe ay mountainous waiting ayam ktera w should be promoted
 
 }
 
@@ -227,9 +228,8 @@ void MarsStation::CheckUpduartionEnd()
 void MarsStation::updateWaitingTime()
 {
 	missions* tempMi;
-	//eue <missions*>* tempPolar=new Queue<missions*>;
 	Queue<missions*>* tempEmerg = new Queue<missions*>;
-	for (int i = 0; i < numofPolarMissions;i++)//if condition gwa el for loop??
+	for (int i = 0; i < numofPolarMissions;i++)
 	{
 		if (WaitingPolarMissQueue->dequeue(tempMi))
 		{
@@ -341,6 +341,7 @@ void MarsStation::InteractiveMode()
 		UpdateCurrDay();
 		Excute_events();
 		AssignMissions();
+
 		PUI->prin_CurrentDay(CurrentDay);
 		printMissionsLine();
 		printInExecMiss_Rovers();
