@@ -55,11 +55,14 @@ void MarsStation::addtoQueue(missions* missP)
 		WaitingEmergMissQueue->enqueue(missP, pr);
 	}
 }
+
 int MarsStation::GetPriority(missions* missionP)
 {
 	int prio = (missionP->getMissSign()) + 10000 * (missionP->getMissDur()) / (missionP->getFormD() * missionP->getTarloc());
 	return prio;
 }
+
+
 void MarsStation::Excute_events()
 {
 	Event* ev;
@@ -228,33 +231,32 @@ void MarsStation::CheckUpduartionEnd()
 void MarsStation::updateWaitingTime()
 {
 	missions* tempMi;
-	Queue<missions*>* tempEmerg = new Queue<missions*>;
-	for (int i = 0; i < numofPolarMissions;i++)
+	Queue<missions*>* tempQ = new Queue<missions*>;
+
+	//this function is called daily why do i loop over the total no of waiting missions when it is decremented every other day
+	//couldve just maybe getCount from Queue to be able to loop over queue marra instead of two while loops
+	while (WaitingPolarMissQueue->dequeue(tempMi))
 	{
-		if (WaitingPolarMissQueue->dequeue(tempMi))
-		{
-			tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
-			WaitingPolarMissQueue->enqueue(tempMi);
-		}
+		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
+		tempQ->enqueue(tempMi);
 	}
+	while (tempQ->dequeue(tempMi))
+	{
+		WaitingPolarMissQueue->enqueue(tempMi);
+	}
+	
+
 	while (WaitingEmergMissQueue->dequeue(tempMi))
 	{
 		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
-		tempEmerg->enqueue(tempMi);
+		tempQ->enqueue(tempMi);
 	}
-	while (tempEmerg->dequeue(tempMi))
+	while (tempQ->dequeue(tempMi))
 	{
 		WaitingEmergMissQueue->enqueue(tempMi, tempMi->getPriority());
 	}
 }
 
-/*void MarsStation::StartSim()
-{
-	CurrentDay = 0;
-	UpdateCurrDay();
-	Excute_events();
-	AssignMissions();
-}*/
 
 void MarsStation::SaveOutputFile(ofstream& outputF)
 {
@@ -342,10 +344,10 @@ void MarsStation::InteractiveMode()
 		Excute_events();
 		AssignMissions();
 
+		//print functions
 		PUI->prin_CurrentDay(CurrentDay);
 		printMissionsLine();
 		printInExecMiss_Rovers();
-		//ba2y el print function
 		Print_Rover_Line();
 		Print_InCheckUp_Rovers();
 		Print_CompletedMissions();
@@ -374,7 +376,6 @@ void MarsStation::SilentMode()
 		AssignMissions();
 	}
 	PUI->SaveFile();
-	//PUI print "Simulation ends, Output file created"
 }
 
 void MarsStation::StepbyStepMode()
@@ -392,10 +393,11 @@ void MarsStation::StepbyStepMode()
 		UpdateCurrDay();
 		Excute_events();
 		AssignMissions();
+
+		//print functions
 		PUI->prin_CurrentDay(CurrentDay);
 		printMissionsLine();
 		printInExecMiss_Rovers();
-		//ba2y el print function
 		Print_Rover_Line();
 		Print_InCheckUp_Rovers();
 		Print_CompletedMissions();
@@ -427,7 +429,6 @@ void MarsStation::printMissionsLine()
 	{
 		WaitingPolarMissQueue->enqueue(MI);
 	}
-//fe 7aga shklha 8lt leh ba loop over the total number of polar missions when idk asln ad eh waiting
 	
 		while (WaitingEmergMissQueue->dequeue(MI))
 		{
@@ -596,7 +597,7 @@ void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int
 	//creates all rovers and enqueues them according to data from input file
 	
 
-	int Id = 0;
+	int Id = 1;
 	for (int i = 0; i < EmergencyRoversCount; i++)
 	{
 		Rover* R = new Rover(Emergency, EmergencyRoverSpeed, EmergencyCheckUpDuration, NumberofMissionsBefCheckUp,Id);
@@ -627,14 +628,14 @@ void MarsStation::LoadEvents(int totnumber, int id, int day, Mission_Type MT, in
 	if (MT == Polar)
 	{
 		numofPolarMissions++;
-		totalNumberofMissions++;
+	
 	}
 	else
 	{
 		numofEmergMissions++;
-		totalNumberofMissions++;
 	}
 
+	totalNumberofMissions++;
 	totNumEvents = totnumber;
 }
 

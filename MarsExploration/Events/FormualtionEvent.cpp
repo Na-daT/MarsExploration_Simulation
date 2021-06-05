@@ -8,16 +8,10 @@ FormualtionEvent::FormualtionEvent(int id, int FD, Mission_Type type, int targ, 
 
 void FormualtionEvent::Execute(MarsStation* MarsStationP)
 {
+	//creates new mission
 	missions* NeMission = new missions(ID, Event_day,location,Duration,sig,Type);
 
-	if (Type == Polar)
-	{
-		MarsStationP->addtoQueue(NeMission); //MArs station pointer to be able to execute the function addtoQueue to be added
-	}
-	else if (Type == Emergency)
-	{
-		MarsStationP->addtoQueue(NeMission);
-
-	}
+	//adds to appropriate list
+	MarsStationP->addtoQueue(NeMission); 
 
 }
