@@ -4,8 +4,8 @@ template < typename T>
 class PriorityNode
 {
 private:
-	T item; // A data item
-	PriorityNode<T>* next; // Pointer to next node
+	T item;
+	PriorityNode<T>* next; 
 	int Priority;
 public:
 	PriorityNode();
