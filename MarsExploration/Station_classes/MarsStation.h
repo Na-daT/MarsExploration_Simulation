@@ -46,7 +46,7 @@ private:
 
 
 public:
-	MarsStation(/*UI* UIp*/);
+	MarsStation();
 
 
 	void addtoQueue(missions* missP); //Add mission created by Event to its aprptiate queue
@@ -56,6 +56,7 @@ public:
 	void LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
 
 	int GetPriority(missions* missionP);//to calculate priority of emergency mission before enqueueing in priorty queue
+
 	void Excute_events();//excute events according to their day
 	void AssignMissions();//check if there are any waiting missions on this day and assign to rover if availble 
 	bool GetAvailableRover(missions* missionP);//check if there is an availble rover according to mission type 

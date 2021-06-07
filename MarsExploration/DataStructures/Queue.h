@@ -1,40 +1,6 @@
 #ifndef __QUEUE_H_
 #define __QUEUE_H_
 
-/*This code is an updated version from "Data Abstraction & Problem Solving with C++,WALLS AND MIRRORS ,SIXTH EDITION"*/
-
-/*
-This is a program that implements the queue abstract data type using a linked list.
-The queue is implemented as a chain of linked nodes that has two pointers,
-a frontPtr pointer for the front of the queue and a backPtr pointer for the back of the queue.
-*/
-
-/*
-				The Node: item of type T and a "next" pointer
-					-------------
-					| item| next | --->
-					-------------
-General Queue case:
-				 frontPtr																backPtr
-					\											   						/
-					 \											  					   /
-					------------- 	  ------------- 	  ------------- 	  -------------
-					| item| next |--->| item| next |--->  | item| next |--->  | item| next |---> NULL
-					------------- 	  ------------- 	  ------------- 	  -------------
-
-Empty Case:
-				 frontptr	 backptr
-						\	 /
-						 \	/
-					---- NULL ------
-Single Node Case:
-				 frontPtr	 backPtr
-					\		/
-					 \	   /
-					--------
-					|	|nxt -->NULL
-					--------
-*/
 
 #include "Node.h"
 
