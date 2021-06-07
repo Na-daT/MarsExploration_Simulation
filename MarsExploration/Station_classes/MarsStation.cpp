@@ -12,7 +12,6 @@ MarsStation::MarsStation(/*UI* UIp*/)
 	numofEmergRovers = 0;
 	numofPolarRovers = 0;
 	CurrentDay = 1;
-
 	PUI = new UI(this);
 
 	EventsQueue = new Queue<Event*>;
@@ -168,7 +167,7 @@ void MarsStation::AssignAvailableRover(missions* Mission, Rover* RovertobeAssign
 
 void MarsStation::AssignInMaintenanceRover(missions* Mission, Rover* RovertobeAssigned)
 {
-	RovertobeAssigned->setSpeed(RovertobeAssigned->getRoverSpeed() / 2);
+	RovertobeAssigned->setSpeed(ceil(RovertobeAssigned->getRoverSpeed() / 2));
 	Mission->setTimeFromToTLOC(ceil(2 * (float((float)Mission->getTarloc() / float(RovertobeAssigned->getRoverSpeed())) / float(25))));
 	int pr = 1000 / (CurrentDay + Mission->getFullTimeEx());
 	InExecRoverQueue->enqueue(RovertobeAssigned, pr);
@@ -198,18 +197,23 @@ void MarsStation::CheckCompletedMissions()
 	{
 		if (ARover->getmissionp()->getMissEndDay() == CurrentDay)
 		{
-			if (ARover->isRoverFlagged() && rand() % 10 < 5)
+			//random probability
+			if (rand() % 10 < 1 /*ARover->getRoverSpeed()*ARover->getID() / ARover->getmissionp()->getTarloc()*/)
 			{
-				missions* currentMiss;
-				currentMiss = ARover->getmissionp();
+				missions* currentMiss = new missions(ARover->getmissionp()->getID(), CurrentDay, ARover->getmissionp()->getTarloc(), ARover->getmissionp()->getMissDur(), ARover->getmissionp()->getMissSign(), ARover->getmissionp()->getType());
+			//	currentMiss->setnewFormulationDay(CurrentDay);
 				addtoQueue(currentMiss);
 				ARover->settingTotMission();
+				InExecRoverQueue->dequeue(ARover);
 				UpdateRoverStatus(ARover);
+				delete ARover->getmissionp();
+
 			}
 			else
 			{
 				ARover->getmissionp()->setStatus(Completed);
 				CompletedMissQueue->enqueue(ARover->getmissionp());
+				InExecRoverQueue->dequeue(ARover);
 				UpdateRoverStatus(ARover);
 			}
 		}
@@ -220,7 +224,7 @@ void MarsStation::CheckCompletedMissions()
 
 void MarsStation::UpdateRoverStatus(Rover* rp)
 {
-	InExecRoverQueue->dequeue(rp);
+
 	int Tarloc = rp->get_TotalDistance();
 	rp->SetMission(nullptr);
 
@@ -269,12 +273,12 @@ void MarsStation::CheckUpduartionEnd()
 	while (InCheckUpPolarQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
 	{
 		InCheckUpPolarQueue->dequeue(Rv);
-		AvailablePolarQueue->enqueue(Rv, Rv->getRoverSpeed());
+		UpdateRoverStatus(Rv);
 	}
 	while (InCheckUpEmergQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
 	{
 		InCheckUpEmergQueue->dequeue(Rv);
-		AvailableEmergRovQueue->enqueue(Rv, Rv->getRoverSpeed());
+		UpdateRoverStatus(Rv);
 	}
 	while (MaintenancePolarQueue->peek(Rv) && (Rv->getMaintenanceStartDate() + 3 == CurrentDay))
 	{
@@ -295,8 +299,6 @@ void MarsStation::updateWaitingTime()
 	missions* tempMi;
 	Queue<missions*>* tempQ = new Queue<missions*>;
 
-	//this function is called daily why do i loop over the total no of waiting missions when it is decremented every other day
-	//couldve just maybe getCount from Queue to be able to loop over queue marra instead of two while loops
 	while (WaitingPolarMissQueue->dequeue(tempMi))
 	{
 		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);

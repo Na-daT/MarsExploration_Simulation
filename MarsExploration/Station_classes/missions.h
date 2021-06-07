@@ -35,8 +35,7 @@ public:
 	void setTimeFromToTLOC(int n);
 	int getTimeFromToTLOC();
 	int getFullTimeEx();
-
-
+	void setnewFormulationDay(int d);
 
 };
 #endif

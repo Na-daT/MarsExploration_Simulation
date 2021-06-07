@@ -14,7 +14,7 @@ bool UI::LoadStation()
 	cin >> s;
 	cout << endl;
 
-	s = "input files\\" + s;
+	s = "input files\\" + s + ".txt";
 
 	InputFile.open(s, ios::in);
 
@@ -144,7 +144,7 @@ void  UI::SaveFile()
 	string s;
 	cout << "Please Enter File Name: ";
 	cin >> s;
-	s = "output files\\" + s;
+	s = "output files\\" + s + ".txt";
 
 	OutputFile.open(s, ios::out);
 
@@ -159,45 +159,54 @@ void UI::prin_CurrentDay(int d)
 
 void UI::print_waitingMissions(int totwaiting, int* waitEmID, int totWaitEm, int totWaitPolar, int* waitPolarID)
 {
-	cout << totwaiting << " " << "Waiting Missions: " << "[";
-
-	if (totwaiting == 0)
+	
+	cout << totwaiting << " " << "Waiting Missions: ";
+	if (totWaitEm != 0)
 	{
-		cout << "] ()" << endl;
-		cout << "-------------------------------------------------------" << endl;
-		return;
+		cout << "[";
+		for (int i = 0; i < totWaitEm; i++)
+		{
+			cout << waitEmID[i] << ",";
+		}
+		cout << "]";
 	}
-	for (int i = 0; i < totWaitEm; i++)
+	if (totWaitPolar != 0)
 	{
-		cout << waitEmID[i] << ",";
+		cout << "(";
+		for (int i = 0; i < totWaitPolar; i++)
+		{
+			cout << waitPolarID[i] << ",";
+		}
+		cout << ")" << endl;
 	}
-	cout << "] (";
-	for (int i = 0; i < totWaitPolar; i++)
-	{
-		cout << waitPolarID[i] << ",";
-	}
-	cout << ")" << endl;
-	cout << "-------------------------------------------------------" << endl;
+	cout << endl << "-------------------------------------------------------" << endl;
 
 }
 
 void UI::Print_inExecMis_Rovers(int totinEx, int NumofEmergency, int NumofPolar, int* EmergencyMissionIDs, int* EmergencyRoversIDs, int* PolarMissionsIDs, int* PolarRoversIDs)
 {
-	cout << totinEx << " In-Execution Missions/Rovers: " << " [";
-	for (int i = 0; i < NumofEmergency; i++)
-	{
-		cout << EmergencyMissionIDs[i] << "/" << EmergencyRoversIDs[i] << ", ";
-	}
-	cout << "] ";
+	cout << totinEx << " In-Execution Missions/Rovers: ";
 
-	cout << "(";
-	for (int i = 0; i < NumofPolar;i++)
+	if (NumofEmergency != 0)
 	{
-		cout << PolarMissionsIDs[i] << "/" << PolarRoversIDs[i] << " ,";
-	}
-	cout << ") " << endl;
+		cout << "[";
 
-	cout << "-------------------------------------------------------" << endl;
+		for (int i = 0; i < NumofEmergency; i++)
+		{
+			cout << EmergencyMissionIDs[i] << "/" << EmergencyRoversIDs[i] << ", ";
+		}
+		cout << "] ";
+	}
+	if (NumofPolar != 0)
+	{
+		cout << "(";
+		for (int i = 0; i < NumofPolar;i++)
+		{
+			cout << PolarMissionsIDs[i] << "/" << PolarRoversIDs[i] << " ,";
+		}
+		cout << ") ";
+	}
+	cout << endl <<"-------------------------------------------------------" << endl;
 }
 
 void UI::WaitForUserClick()
@@ -214,95 +223,116 @@ void UI::SilentModePrintout()
 
 void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* AvailablePolerIDs, int AvailableEmrgency, int AvailablePolar)
 {
-	cout << totRov << "Available Rovers: [";
+	cout << totRov << "Available Rovers:";
 
 	if (AvailableEmrgency != 0)
 	{
+		cout << "[";
 		for (int i = 0; i < AvailableEmrgency;i++)
 		{
 			cout << AvailableEmergencyIDs[i] << ",";
 		}
+		cout << "] ";
 	}
-	cout << "] (";
+	
 
 	if (AvailablePolar != 0)
 	{
+		cout << "(";
 		for (int i = 0; i < AvailablePolar;i++)
 		{
 			cout << AvailablePolerIDs[i] << ",";
 		}
+		cout << ")";
 	}
-	cout << ")" << endl;
-	cout << "-------------------------------------------------------" << endl;
+	
+	cout << endl << "-------------------------------------------------------" << endl;
 }
 
 void UI::Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP, int PolarInCheckUp, int* EmIDs, int* PolarIDs)
 {
-	cout << totInCheckUp << " In-Checkup Rovers: [";
+	cout << totInCheckUp << " In-Checkup Rovers: ";
 	if (EmergencyinCheckUP != 0)
 	{
+		cout << "[";
+
 		for (int i = 0;i < EmergencyinCheckUP;i++)
 		{
 			cout << EmIDs[i] << ",";
 		}
+		cout << "] ";
+
 	}
-	cout << "] (";
 
 	if (PolarInCheckUp != 0)
 	{
+		cout << "(";
+
 		for (int i = 0; i < PolarInCheckUp;i++)
 		{
 			cout << PolarIDs[i] << ",";
 		}
+		cout << ")";
+
 	}
-	cout << ")" << endl;
-	cout << "-------------------------------------------------------" << endl;
+	cout << endl << "-------------------------------------------------------" << endl;
 }
 
 void UI::Print_Maintenance_Rovers(int totInCheckUp, int EmergencyinCheckUP, int PolarInCheckUp, int* EmIDs, int* PolarIDs)
 {
-	cout << totInCheckUp << " Maintenance Rovers: [";
+	cout << totInCheckUp << " Maintenance Rovers: ";
 	if (EmergencyinCheckUP != 0)
 	{
+		cout << "[";
+
 		for (int i = 0; i < EmergencyinCheckUP; i++)
 		{
 			cout << EmIDs[i] << ",";
 		}
+		cout << "] ";
+
 	}
-	cout << "] (";
 
 	if (PolarInCheckUp != 0)
 	{
+		cout << "(";
 		for (int i = 0; i < PolarInCheckUp; i++)
 		{
 			cout << PolarIDs[i] << ",";
 		}
+		cout << ")";
+
 	}
-	cout << ")" << endl;
-	cout << "-------------------------------------------------------" << endl;
+	cout << endl << "-------------------------------------------------------" << endl;
 }
 
 void UI::CompletedMissions(int totMissions, int EmMissions, int PolarMissions, int* Emergency_IDs, int* Polar_IDs)
 {
-	cout << totMissions << " Completed Missions: [";
+	cout << totMissions << " Completed Missions: ";
 	if (EmMissions != 0)
 	{
+		cout << "[";
+
 		for (int i = 0; i < EmMissions;i++)
 		{
 			cout << Emergency_IDs[i] << ",";
 		}
+		cout << "] ";
+
 	}
-	cout << "] (";
 
 	if (PolarMissions != 0)
 	{
+		cout << "(";
+
 		for (int i = 0;i < PolarMissions;i++)
 		{
 			cout << Polar_IDs[i] << ",";
 		}
+		cout << ")";
+
 	}
-	cout << ")" << endl;
-	cout << "-------------------------------------------------------" << endl;
+	cout <<endl<< "-------------------------------------------------------" << endl;
 	cout << endl;
 
 }

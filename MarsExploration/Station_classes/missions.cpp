@@ -84,6 +84,11 @@ int missions::getFullTimeEx()
 	return n;
 }
 
+void missions::setnewFormulationDay(int d)
+{
+	FormDay = d;
+}
+
 int missions::getPriority()
 {
 	return priority;

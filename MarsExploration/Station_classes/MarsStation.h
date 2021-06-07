@@ -27,6 +27,7 @@ private:
 	int numofEmergRovers;
 	int numofPolarRovers;
 
+	int totalFailure;
 	int CurrentDay;
 
 	UI* PUI;
