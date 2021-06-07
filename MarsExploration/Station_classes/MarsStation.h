@@ -31,15 +31,18 @@ private:
 
 	UI* PUI;
 
-	Queue<Event *> *EventsQueue;
+	Queue<Event*>* EventsQueue;
 	PriorityQueue<missions*>* WaitingEmergMissQueue;
 	Queue<missions*>* WaitingPolarMissQueue;
 	Queue<missions*>* CompletedMissQueue;
-	Queue<Rover*>* AvailableEmergRovQueue;
-	Queue<Rover*>* AvailablePolarQueue;
+	PriorityQueue<Rover*>* AvailableEmergRovQueue;
+	PriorityQueue<Rover*>* AvailablePolarQueue;
 	PriorityQueue<Rover*>* InExecRoverQueue;
 	Queue<Rover*>* InCheckUpPolarQueue;
 	Queue<Rover*>* InCheckUpEmergQueue;
+	Queue<Rover*>* MaintenancePolarQueue;
+	Queue<Rover*>* MaintenanceEmergQueue;
+
 
 public:
 	MarsStation(/*UI* UIp*/);
@@ -48,14 +51,15 @@ public:
 	void addtoQueue(missions* missP); //Add mission created by Event to its aprptiate queue
 
 	//loading functions
-	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int EmergencyRoverSpeed, int PolarRoverSpeed, int NumberofMissionsBefCheckUp,int EmergencyCheckUpDuration, int PolarCheckupDuration);
+	void loadRovers(int EmergencyRoversCount, int PolarRoversCount, int* EmergencyRoverSpeed, int* PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration);
 	void LoadEvents(int totnumber, int id, int day, Mission_Type MT, int target, int duration, int significance);//to enqueue event that will be read from the UI 
 
 	int GetPriority(missions* missionP);//to calculate priority of emergency mission before enqueueing in priorty queue
 	void Excute_events();//excute events according to their day
 	void AssignMissions();//check if there are any waiting missions on this day and assign to rover if availble 
 	bool GetAvailableRover(missions* missionP);//check if there is an availble rover according to mission type 
-
+	void AssignAvailableRover(missions* Mission, Rover* RovertobeAssigned);
+	void AssignInMaintenanceRover(missions* Mission, Rover* RovertobeAssigned);
 	//////////////////////////////
 
 	void UpdateCurrDay(); //increments current day and calls other incrementing functions below
@@ -67,7 +71,7 @@ public:
 	/////////////////////////////
 
 	void SaveOutputFile(ofstream& outputF);  //Saving output file (UI calls this function and send the File so it can write into it
-	
+
 	//output file calculations
 	float CalculateAvgWaiting();
 	int calculateCD(missions* M);
@@ -78,7 +82,7 @@ public:
 	void StartSim(int t);  //starts simulation in appropriate mode, called in UI
 
 	//Simulation modes
-	void InteractiveMode(); 
+	void InteractiveMode();
 	void SilentMode();
 	void StepbyStepMode();
 
@@ -89,6 +93,7 @@ public:
 	void printInExecMiss_Rovers();
 	void Print_Rover_Line();
 	void Print_InCheckUp_Rovers();
+	void Print_Maintenance_Rovers();
 	void Print_CompletedMissions();
 
 	/////////////////////////////

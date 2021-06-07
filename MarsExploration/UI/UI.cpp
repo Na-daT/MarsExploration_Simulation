@@ -34,25 +34,40 @@ bool UI::LoadStation()
 bool UI::LoadStation(ifstream& inputFile)
 {
 	int EmergencyRoversCount, PolarRoversCount;
-	int EmergencyRoverSpeed, PolarRoverSpeed; //{polar speed, Emergency speed}
+	int* EmergencyRoverSpeed;
+	int* PolarRoverSpeed; //{polar speed, Emergency speed}
 	int NumberofMissionsBefCheckUp;
 	int EmergencyCheckUpDuration, PolarCheckupDuration; //{polarDuration, Emergency Duration}
-	
+
 
 
 	//array containing all the values to be stored instead of reading one by one
 	int* arr[] =
 	{
-		&EmergencyRoversCount, & PolarRoversCount, & EmergencyRoverSpeed,
-		& PolarRoverSpeed, & NumberofMissionsBefCheckUp, & EmergencyCheckUpDuration, & PolarCheckupDuration
-		
+		&EmergencyRoversCount, &PolarRoversCount, &NumberofMissionsBefCheckUp, &EmergencyCheckUpDuration, &PolarCheckupDuration
 	};
-	
-	for (int i = 0; i < 7;i++)
+
+	for (int i = 0; i < 2;i++)
 	{
 		inputFile >> *arr[i];
-
 	}
+
+	EmergencyRoverSpeed = new int[EmergencyRoversCount];
+	PolarRoverSpeed = new int[PolarRoversCount];
+
+	for (int i = 0; i < EmergencyRoversCount; i++) {
+		inputFile >> EmergencyRoverSpeed[i];
+	}
+
+	for (int i = 0; i < PolarRoversCount; i++) {
+		inputFile >> PolarRoverSpeed[i];
+	}
+
+	for (int i = 2; i < 5; i++)
+	{
+		inputFile >> *arr[i];
+	}
+
 
 	if (PolarRoversCount == 0 && EmergencyRoversCount == 0)
 	{
@@ -64,7 +79,7 @@ bool UI::LoadStation(ifstream& inputFile)
 	MarsP->loadRovers(EmergencyRoversCount, PolarRoversCount, EmergencyRoverSpeed, PolarRoverSpeed, NumberofMissionsBefCheckUp, EmergencyCheckUpDuration, PolarCheckupDuration);
 
 	//send the rest of the file to load Events data
-	LoadFormEvents(inputFile); 
+	LoadFormEvents(inputFile);
 
 	return true;
 }
@@ -86,18 +101,18 @@ void UI::LoadFormEvents(ifstream& inputFile)
 
 	for (int i = 0; i < EventsNO; i++)
 	{
-		
+
 
 		int* arr[] =
 		{
 			&Ev_day,
-			& Event_ID,
-			& TLOC, & MDUR, & SIG
+			&Event_ID,
+			&TLOC, &MDUR, &SIG
 
 		};
 		inputFile >> EventType;
 		inputFile >> Missiontype;
-		
+
 		for (int i = 0;i < 5;i++)
 		{
 			inputFile >> *arr[i];
@@ -106,7 +121,7 @@ void UI::LoadFormEvents(ifstream& inputFile)
 		Mission_Type MT;
 		MT = (Missiontype == 'P' ? Polar : Emergency);
 
-		MarsP->LoadEvents(EventsNO,Event_ID, Ev_day,MT,TLOC,MDUR,SIG );
+		MarsP->LoadEvents(EventsNO, Event_ID, Ev_day, MT, TLOC, MDUR, SIG);
 
 	}
 
@@ -119,7 +134,7 @@ void UI::GetModeofOperation()
 
 	cin >> t;
 	MarsP->StartSim(t);
-	
+
 }
 
 
@@ -129,7 +144,7 @@ void  UI::SaveFile()
 	string s;
 	cout << "Please Enter File Name: ";
 	cin >> s;
-	s ="output files\\" + s;
+	s = "output files\\" + s;
 
 	OutputFile.open(s, ios::out);
 
@@ -139,7 +154,7 @@ void  UI::SaveFile()
 
 void UI::prin_CurrentDay(int d)
 {
-	cout << "Current Day:" <<d << endl;
+	cout << "Current Day:" << d << endl;
 }
 
 void UI::print_waitingMissions(int totwaiting, int* waitEmID, int totWaitEm, int totWaitPolar, int* waitPolarID)
@@ -154,7 +169,7 @@ void UI::print_waitingMissions(int totwaiting, int* waitEmID, int totWaitEm, int
 	}
 	for (int i = 0; i < totWaitEm; i++)
 	{
-		cout << waitEmID[i] <<",";
+		cout << waitEmID[i] << ",";
 	}
 	cout << "] (";
 	for (int i = 0; i < totWaitPolar; i++)
@@ -210,7 +225,7 @@ void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* Available
 	}
 	cout << "] (";
 
-	if (AvailablePolar!= 0)
+	if (AvailablePolar != 0)
 	{
 		for (int i = 0; i < AvailablePolar;i++)
 		{
@@ -218,12 +233,12 @@ void UI::Print_Rover_Line(int totRov, int* AvailableEmergencyIDs, int* Available
 		}
 	}
 	cout << ")" << endl;
-	cout<< "-------------------------------------------------------" << endl;
+	cout << "-------------------------------------------------------" << endl;
 }
 
-void UI::Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP,int PolarInCheckUp, int*EmIDs,int*PolarIDs)
+void UI::Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP, int PolarInCheckUp, int* EmIDs, int* PolarIDs)
 {
-	cout << totInCheckUp << " In-Checkup Rovers: [" ;
+	cout << totInCheckUp << " In-Checkup Rovers: [";
 	if (EmergencyinCheckUP != 0)
 	{
 		for (int i = 0;i < EmergencyinCheckUP;i++)
@@ -235,7 +250,30 @@ void UI::Print_CheckUp_Rovers(int totInCheckUp, int EmergencyinCheckUP,int Polar
 
 	if (PolarInCheckUp != 0)
 	{
-		for(int i = 0; i< PolarInCheckUp;i ++)
+		for (int i = 0; i < PolarInCheckUp;i++)
+		{
+			cout << PolarIDs[i] << ",";
+		}
+	}
+	cout << ")" << endl;
+	cout << "-------------------------------------------------------" << endl;
+}
+
+void UI::Print_Maintenance_Rovers(int totInCheckUp, int EmergencyinCheckUP, int PolarInCheckUp, int* EmIDs, int* PolarIDs)
+{
+	cout << totInCheckUp << " Maintenance Rovers: [";
+	if (EmergencyinCheckUP != 0)
+	{
+		for (int i = 0; i < EmergencyinCheckUP; i++)
+		{
+			cout << EmIDs[i] << ",";
+		}
+	}
+	cout << "] (";
+
+	if (PolarInCheckUp != 0)
+	{
+		for (int i = 0; i < PolarInCheckUp; i++)
 		{
 			cout << PolarIDs[i] << ",";
 		}
@@ -277,7 +315,7 @@ UI::~UI()
 
 /*void UI::InteractiveMode()
 {
-	
+
 
 
 }

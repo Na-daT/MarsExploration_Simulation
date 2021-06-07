@@ -8,6 +8,8 @@ Rover::Rover(Mission_Type m, int speed, int cUpT, int numOfmissions, int id)
 	numOfmissionsBefCheckUp = numOfmissions;
 	TotalNumOfMissions = 0;
 	ID = id;
+	total_distance = 0;
+	flag = false;
 }
 
 void Rover::setType(Mission_Type m)
@@ -28,9 +30,10 @@ void Rover::SetMission(missions* Mis)
 	Mission_in_execution = Mis;
 }
 
-void Rover::incrementTotMission()
+
+void Rover::settingTotMission()
 {
-	TotalNumOfMissions++;
+	TotalNumOfMissions = numOfmissionsBefCheckUp;
 }
 
 missions* Rover::getmissionp()
@@ -73,16 +76,64 @@ int Rover::getRoverSpeed()
 
 void Rover::setCurrentMissPr(int P)
 {
-	current_missionEx_pr = P;
+	current_missionInEx_priority = P;
 
 }
 
 int Rover::getCurrentMissPr()
 {
-	return current_missionEx_pr;
+	return current_missionInEx_priority;
 }
 
 int Rover::getID()
 {
 	return ID;
+}
+/*
+void Rover::setSpeedHalf()
+{
+	setSpeed(RovSpeed/2);
+}
+*/
+int Rover::get_TotalDistance()
+{
+	return total_distance;
+}
+
+void Rover::setTotDistance(int d)
+{
+	total_distance = d;
+}
+
+
+
+void Rover::SetMaintenanceStartDate(int t)
+{
+	maintenance_Start_Date = t;
+}
+
+int Rover::getMaintenanceStartDate()
+{
+	return maintenance_Start_Date;
+}
+
+void Rover::setTotalMissionsDonebeforeCheckup(int t)
+{
+	TotalNumOfMissions = t;
+
+}
+
+int Rover::getTotalMissionsDonebeforeCheckup()
+{
+	return TotalNumOfMissions;
+}
+
+void Rover::flagRover()
+{
+	flag = true;
+}
+
+bool Rover::isRoverFlagged()
+{
+	return flag;
 }
