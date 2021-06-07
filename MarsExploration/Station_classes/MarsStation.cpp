@@ -59,6 +59,9 @@ void MarsStation::addtoQueue(missions* missP)
 
 int MarsStation::GetPriority(missions* missionP)
 {
+	//this priority equation balances the significance of a mission and its how far it is and when it was formulated
+	//if two missions have the same target location but one is formulated after the other then the one formulated earlier has higherr priority
+	//same for Duration, if the only difference is mission duration then the longer the mission the higher priority it has
 	int prio = (missionP->getMissSign()) + 10000 * (missionP->getMissDur()) / (missionP->getFormD() * missionP->getTarloc());
 	return prio;
 }
@@ -69,12 +72,15 @@ void MarsStation::Excute_events()
 	Event* ev;
 	while (EventsQueue->peek(ev))
 	{
+		//excute events on daily basis
 		if (ev->getEvent_day() > CurrentDay)
 		{
 			return;
 		}
 		ev->Execute(this);
 		EventsQueue->dequeue(ev);
+
+		//de allocate the event after excution
 		delete ev;
 	}
 }
@@ -84,10 +90,13 @@ void MarsStation::AssignMissions()
 	missions* currentMiss;
 	while (WaitingEmergMissQueue->peekFront(currentMiss))
 	{
+		//if no available Rovers the mission is not assigned and waits for next day
 		if (GetAvailableRover(currentMiss))
 		{
 			WaitingEmergMissQueue->dequeue(currentMiss);
 			currentMiss->setStatus(in_Execution);
+
+			//this function takes the current day as a parameter and adds it to total time of excution to gett End date of mission
 			currentMiss->setEndDate(CurrentDay);
 		}
 		else
@@ -112,7 +121,7 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 	Mission_Type Mtype = missionP->getType();
 	Rover* ARover;
 
-
+	//each mission type has different priority for each rover type
 	switch ((int)Mtype)
 	{
 	case(1):
@@ -154,28 +163,33 @@ bool MarsStation::GetAvailableRover(missions* missionP)
 	return false;
 }
 
+//to avoid repeating logic in above funcion
 void MarsStation::AssignAvailableRover(missions* Mission, Rover* RovertobeAssigned)
 {
 	Mission->setTimeFromToTLOC(ceil(2 * (float((float)Mission->getTarloc() / float(RovertobeAssigned->getRoverSpeed())) / float(25))));
+
+	//enqueue rovers according to time they take to finish mission
+	//rovers that finish first has higher priority thus are always on top of queue
 	int pr = 1000 / (CurrentDay + Mission->getFullTimeEx());
 	InExecRoverQueue->enqueue(RovertobeAssigned, pr);
+
+
 	RovertobeAssigned->SetMission(Mission);
 	RovertobeAssigned->setTotalMissionsDonebeforeCheckup(RovertobeAssigned->getTotalMissionsDonebeforeCheckup() + 1);
 	RovertobeAssigned->setCurrentMissPr(pr);
+
+	//need to increment total distance moved by rover to check if it need maintenance
 	RovertobeAssigned->setTotDistance(RovertobeAssigned->get_TotalDistance() + Mission->getTarloc());
 }
 
 void MarsStation::AssignInMaintenanceRover(missions* Mission, Rover* RovertobeAssigned)
 {
+	//same logic as above function 
+	//only diference is now rover has half its speed for rest of simulation
+
 	RovertobeAssigned->setSpeed(ceil(RovertobeAssigned->getRoverSpeed() / 2));
-	Mission->setTimeFromToTLOC(ceil(2 * (float((float)Mission->getTarloc() / float(RovertobeAssigned->getRoverSpeed())) / float(25))));
-	int pr = 1000 / (CurrentDay + Mission->getFullTimeEx());
-	InExecRoverQueue->enqueue(RovertobeAssigned, pr);
-	RovertobeAssigned->SetMission(Mission);
-	RovertobeAssigned->setTotalMissionsDonebeforeCheckup(RovertobeAssigned->getTotalMissionsDonebeforeCheckup() + 1);
-	RovertobeAssigned->setCurrentMissPr(pr);
-	RovertobeAssigned->setTotDistance(RovertobeAssigned->get_TotalDistance() + Mission->getTarloc());
-	RovertobeAssigned->flagRover();
+
+	AssignAvailableRover(Mission, RovertobeAssigned);
 }
 
 void MarsStation::UpdateCurrDay()
@@ -183,9 +197,9 @@ void MarsStation::UpdateCurrDay()
 
 	CurrentDay++;
 	CheckCompletedMissions();
-	//Check check up duration of rovers
+	//Check check up and maintenance duration of rovers
 	CheckUpduartionEnd();
-	//update waiting time of missions in queues
+	//update waiting time of missions still waiting in queues
 	updateWaitingTime();
 
 }
@@ -195,22 +209,32 @@ void MarsStation::CheckCompletedMissions()
 	Rover* ARover;
 	while (InExecRoverQueue->peekFront(ARover))
 	{
+		//if the first rover in excution still didnt finish then according the priority no other rover has thus break out of the while loop
+
 		if (ARover->getmissionp()->getMissEndDay() == CurrentDay)
 		{
 			//random probability
 			if (rand() % 10 < 1 /*ARover->getRoverSpeed()*ARover->getID() / ARover->getmissionp()->getTarloc()*/)
 			{
+				//reallocating mission with same attributes except formualtion day
 				missions* currentMiss = new missions(ARover->getmissionp()->getID(), CurrentDay, ARover->getmissionp()->getTarloc(), ARover->getmissionp()->getMissDur(), ARover->getmissionp()->getMissSign(), ARover->getmissionp()->getType());
-			//	currentMiss->setnewFormulationDay(CurrentDay);
+				
+				//sending mission back to waiting missions queue
 				addtoQueue(currentMiss);
+
+				//condition Rover to go into check up immediatly
 				ARover->settingTotMission();
 				InExecRoverQueue->dequeue(ARover);
 				UpdateRoverStatus(ARover);
+
+				//deallocate original failed mission
 				delete ARover->getmissionp();
 
 			}
+			//default logic when mission doesnt fail
 			else
 			{
+
 				ARover->getmissionp()->setStatus(Completed);
 				CompletedMissQueue->enqueue(ARover->getmissionp());
 				InExecRoverQueue->dequeue(ARover);
@@ -224,12 +248,18 @@ void MarsStation::CheckCompletedMissions()
 
 void MarsStation::UpdateRoverStatus(Rover* rp)
 {
-
+	//get total distance done by rover so far (condition of maintenance)
 	int Tarloc = rp->get_TotalDistance();
+
+	//mission is already moved to in excution queue
 	rp->SetMission(nullptr);
 
+	//first compare the total missions done by rover so far to the number of missions before check up from input file
+	//condition of check up
+	//if a rover needs both check up and maintenance, check up is done first as maintenance can be detrminated without finishing unllike check up
 	if (rp->CompareMissNoOfRov())
 	{
+		//reset the total missions done by rover so far 
 		rp->setTotalMissionsDonebeforeCheckup(0);
 
 		if (rp->getRoverType() == Emergency)
@@ -243,6 +273,7 @@ void MarsStation::UpdateRoverStatus(Rover* rp)
 			rp->setCheckUpStartDate(CurrentDay);
 		}
 	}
+	//rovers undergo maintenance if they move more than 500km total
 	else if (Tarloc >= 500)
 	{
 		if (rp->getRoverType() == Emergency)
@@ -256,6 +287,7 @@ void MarsStation::UpdateRoverStatus(Rover* rp)
 			rp->SetMaintenanceStartDate(CurrentDay);
 		}
 	}
+	//if rover doesnt need neither check up nor maintenace it is send back to the appropriate availble queue
 	else
 	{
 		if (rp->getRoverType() == Emergency)
@@ -273,6 +305,7 @@ void MarsStation::CheckUpduartionEnd()
 	while (InCheckUpPolarQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
 	{
 		InCheckUpPolarQueue->dequeue(Rv);
+		//we still need to check if the rover needed maintenance
 		UpdateRoverStatus(Rv);
 	}
 	while (InCheckUpEmergQueue->peek(Rv) && (Rv->getCheckUpDuaratoin() + Rv->GetCheckUpStartDate() == CurrentDay))
@@ -280,8 +313,10 @@ void MarsStation::CheckUpduartionEnd()
 		InCheckUpEmergQueue->dequeue(Rv);
 		UpdateRoverStatus(Rv);
 	}
+	//maintenance duration is 3 days regardelss of rover type
 	while (MaintenancePolarQueue->peek(Rv) && (Rv->getMaintenanceStartDate() + 3 == CurrentDay))
 	{
+		//reset total distance moved by rover
 		Rv->setTotDistance(0);
 		MaintenancePolarQueue->dequeue(Rv);
 		AvailablePolarQueue->enqueue(Rv, Rv->getRoverSpeed());
@@ -299,6 +334,7 @@ void MarsStation::updateWaitingTime()
 	missions* tempMi;
 	Queue<missions*>* tempQ = new Queue<missions*>;
 
+	//increment number of waiting days then enqueue missions again
 	while (WaitingPolarMissQueue->dequeue(tempMi))
 	{
 		tempMi->setWaitingtime(tempMi->getWaitingtime() + 1);
@@ -391,6 +427,7 @@ void MarsStation::StartSim(int t)
 	}
 }
 
+//program only terminates if there are no more events, missions in execution, or rovers in check up or maintenance
 void MarsStation::InteractiveMode()
 {
 	if (!PUI->LoadStation())
@@ -401,7 +438,8 @@ void MarsStation::InteractiveMode()
 	CurrentDay = 0;
 
 	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
-		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty() && MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty() 
+		&& MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
 	{
 		UpdateCurrDay();
 		Excute_events();
@@ -433,7 +471,8 @@ void MarsStation::SilentMode()
 	CurrentDay = 0;
 
 	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
-		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty() && MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty()
+		&& MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
 	{
 		UpdateCurrDay();
 		Excute_events();
@@ -452,7 +491,8 @@ void MarsStation::StepbyStepMode()
 	CurrentDay = 0;
 
 	while (!(EventsQueue->isEmpty() && WaitingEmergMissQueue->isEmpty() && WaitingPolarMissQueue->isEmpty()
-		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty() && MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
+		&& InExecRoverQueue->isEmpty() && InCheckUpPolarQueue->isEmpty() && InCheckUpEmergQueue->isEmpty()
+		&& MaintenancePolarQueue->isEmpty() && MaintenanceEmergQueue->isEmpty()))
 	{
 		UpdateCurrDay();
 		Excute_events();
@@ -476,6 +516,8 @@ void MarsStation::StepbyStepMode()
 void MarsStation::printMissionsLine()
 {
 	missions* MI;
+	//get ids of all mission waiting in current day
+	//and their total number (changes every day)
 	int* WaitingPolarIDs = new int[numofPolarMissions];
 	int* WaitingEmergencyIDs = new int[numofEmergMissions];
 	int waitingEm = 0;
@@ -506,6 +548,7 @@ void MarsStation::printMissionsLine()
 		WaitingEmergMissQueue->enqueue(MI, MI->getPriority());
 	}
 
+	//send data to UI to Print on console
 	PUI->print_waitingMissions(waitingEm + waitingPolar, WaitingEmergencyIDs, waitingEm, waitingPolar, WaitingPolarIDs);
 }
 
@@ -690,9 +733,9 @@ void MarsStation::Print_CompletedMissions()
 
 void MarsStation::loadRovers(int EmergencyRoversCount, int PolarRoversCount, int* EmergencyRoverSpeed, int* PolarRoverSpeed, int NumberofMissionsBefCheckUp, int EmergencyCheckUpDuration, int PolarCheckupDuration)
 {
-	//creates all rovers and enqueues them according to data from input file
+	//creates all rover objects and enqueues them according to data from input file
 
-
+	//ID generator, incremented every time a rover is created to esnure it is unique
 	int Id = 1;
 	for (int i = 0; i < EmergencyRoversCount; i++)
 	{

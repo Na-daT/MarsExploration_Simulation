@@ -18,7 +18,7 @@ class Rover
 	int ID;
 	int total_distance;
 	int maintenance_Start_Date;
-	bool flag;
+	//bool flag;
 public:
 	Rover(Mission_Type m, int speed, int cUpT, int numOfmissionsBefCheckUp, int id);
 	void setType(Mission_Type m);
@@ -41,8 +41,8 @@ public:
 	int getMaintenanceStartDate();
 	void setTotalMissionsDonebeforeCheckup(int t);
 	int getTotalMissionsDonebeforeCheckup();
-	void flagRover();
-	bool isRoverFlagged();
+	//void flagRover();
+	//bool isRoverFlagged();
 
 };
 
