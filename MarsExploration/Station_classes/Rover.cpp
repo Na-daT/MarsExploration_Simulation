@@ -9,7 +9,7 @@ Rover::Rover(Mission_Type m, int speed, int cUpT, int numOfmissions, int id)
 	TotalNumOfMissions = 0;
 	ID = id;
 	total_distance = 0;
-	flag = false;
+	//flag = false;
 }
 
 void Rover::setType(Mission_Type m)
@@ -128,7 +128,7 @@ int Rover::getTotalMissionsDonebeforeCheckup()
 	return TotalNumOfMissions;
 }
 
-void Rover::flagRover()
+/*void Rover::flagRover()
 {
 	flag = true;
 }
@@ -137,3 +137,4 @@ bool Rover::isRoverFlagged()
 {
 	return flag;
 }
+*/
