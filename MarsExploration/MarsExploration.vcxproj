@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input files\EventsMoreThanRovers.txt" />
+    <Text Include="input files\TestCase7.txt" />
     <Text Include="input files\TestCase1.txt" />
     <Text Include="input files\TestCase2.txt" />
     <Text Include="input files\TestCase3.txt" />
